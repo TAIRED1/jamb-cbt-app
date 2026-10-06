@@ -1,0 +1,80 @@
+.calculator-container {
+  position: absolute;
+  top: 80px;
+  right: 20px;
+  width: 300px;
+  z-index: 1000;
+  padding: 1.5rem;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+}
+
+.calculator-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.calculator-header h4 {
+  margin: 0;
+  font-size: 1.2rem;
+}
+
+.close-btn {
+  background: transparent;
+  border: none;
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: color 0.2s;
+}
+
+.close-btn:hover {
+  color: var(--danger);
+}
+
+.calculator-display {
+  background: var(--surface-solid);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 1rem;
+  font-size: 1.5rem;
+  text-align: right;
+  margin-bottom: 1rem;
+  font-family: monospace;
+  word-wrap: break-word;
+  min-height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.calculator-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0.5rem;
+}
+
+.calc-btn {
+  padding: 1rem 0;
+  font-size: 1.2rem;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background: var(--surface-hover);
+  color: var(--text-main);
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.calc-btn:hover {
+  background: var(--border);
+}
+
+.calc-btn-primary {
+  background: var(--primary);
+  color: white;
+  border-color: var(--primary);
+}
+
+.calc-btn-primary:hover {
+  background: var(--primary-hover);
+}

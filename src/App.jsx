@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import subjectsData from './data/offline_questions.json';
-import { Clock, CheckCircle2, XCircle, ArrowRight, ArrowLeft, RefreshCw, BookOpen, Moon, Sun } from 'lucide-react';
+import { Clock, CheckCircle2, XCircle, ArrowRight, ArrowLeft, RefreshCw, BookOpen, Moon, Sun, Calculator as CalcIcon, LogOut, Settings } from 'lucide-react';
+import Calculator from './Calculator';
+import './Calculator.css';
 
 function App() {
   const [gameState, setGameState] = useState('home'); // home, testing, results
@@ -10,8 +12,12 @@ function App() {
   const [answers, setAnswers] = useState({}); // { index: selectedOptionIndex }
   const [timeLeft, setTimeLeft] = useState(0);
   
-  // Default to dark mode for that premium "cool reading" vibe
+  // Settings
   const [isDarkMode, setIsDarkMode] = useState(true);
+  const [examMode, setExamMode] = useState('practice'); // 'practice' or 'exam'
+  const [questionsPerSubject, setQuestionsPerSubject] = useState(40);
+  const [showCalculator, setShowCalculator] = useState(false);
+  const [showSettings, setShowSettings] = useState(false);
 
   useEffect(() => {
     if (isDarkMode) {
@@ -42,26 +48,55 @@ function App() {
     if (selectedSubjects.includes(subjectKey)) {
       setSelectedSubjects(prev => prev.filter(s => s !== subjectKey));
     } else {
-      if (selectedSubjects.length < 4) { // Max 4 subjects for JAMB
+      if (selectedSubjects.length < 4) { 
         setSelectedSubjects(prev => [...prev, subjectKey]);
       }
+    }
+  };
+
+  const playSound = (isCorrect) => {
+    try {
+      const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+      const oscillator = audioCtx.createOscillator();
+      const gainNode = audioCtx.createGain();
+      
+      oscillator.connect(gainNode);
+      gainNode.connect(audioCtx.destination);
+      
+      if (isCorrect) {
+        oscillator.type = 'sine';
+        oscillator.frequency.setValueAtTime(800, audioCtx.currentTime); 
+        oscillator.frequency.exponentialRampToValueAtTime(1200, audioCtx.currentTime + 0.1);
+        gainNode.gain.setValueAtTime(0.1, audioCtx.currentTime);
+        gainNode.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.5);
+      } else {
+        oscillator.type = 'sawtooth';
+        oscillator.frequency.setValueAtTime(300, audioCtx.currentTime); 
+        oscillator.frequency.exponentialRampToValueAtTime(150, audioCtx.currentTime + 0.1);
+        gainNode.gain.setValueAtTime(0.1, audioCtx.currentTime);
+        gainNode.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.5);
+      }
+      
+      oscillator.start();
+      oscillator.stop(audioCtx.currentTime + 0.5);
+    } catch (e) {
+      console.log("Audio not supported on this device");
     }
   };
 
   const startExam = () => {
     if (selectedSubjects.length === 0) return;
     
-    // Combine questions from selected subjects - but limit them like real JAMB!
     let combined = [];
     selectedSubjects.forEach(sub => {
-      // Get questions for the subject
       let qs = subjectsData[sub].questions;
-      
-      // Shuffle the questions array so you get different questions every time
       qs = [...qs].sort(() => 0.5 - Math.random());
       
-      // JAMB format: Use 60 questions for English, 40 for others
-      let limit = sub.toLowerCase() === 'english' ? 60 : 40;
+      // Use standard JAMB format if 40 is selected, else use the exact limit chosen
+      let limit = questionsPerSubject;
+      if (questionsPerSubject === 40 && sub.toLowerCase() === 'english') {
+        limit = 60; // Standard JAMB gives 60 for english
+      }
       
       qs = qs.slice(0, limit).map(q => ({
         ...q,
@@ -70,20 +105,18 @@ function App() {
       combined = [...combined, ...qs];
     });
     
-    // Shuffle the final combined list slightly to mix subjects, or leave them grouped
-    // Let's leave them grouped so they can navigate sequentially like subjects
-    
     setCurrentQuestions(combined);
     setAnswers({});
     setCurrentQuestionIndex(0);
-    
-    // Standard JAMB time: 2 hours (120 mins) for 4 subjects (approx 180 questions). Let's do 40 secs per question to be safe.
     setTimeLeft(combined.length * 40); 
     setGameState('testing');
+    setShowCalculator(false);
   };
 
   const submitExam = () => {
-    setGameState('results');
+    if(window.confirm("Are you sure you want to end the test?")) {
+      setGameState('results');
+    }
   };
 
   const formatTime = (seconds) => {
@@ -95,10 +128,20 @@ function App() {
   };
 
   const handleSelectOption = (optionIndex) => {
+    // If in practice mode and already answered, don't allow changing
+    if (examMode === 'practice' && answers[currentQuestionIndex] !== undefined) {
+      return;
+    }
+
     setAnswers(prev => ({
       ...prev,
       [currentQuestionIndex]: optionIndex
     }));
+
+    if (examMode === 'practice') {
+      const q = currentQuestions[currentQuestionIndex];
+      playSound(optionIndex === q.answer);
+    }
   };
 
   const calculateScore = () => {
@@ -113,9 +156,44 @@ function App() {
   const renderHome = () => (
     <div className="glass-card hero-section">
       <h1>TAIRED JAMB CBT PRACTICE</h1>
-      <p style={{ color: 'var(--text-muted)', marginBottom: '2.5rem', fontSize: '1.25rem', lineHeight: '1.6' }}>
-        Experience the real CBT environment with dark mode for strain-free reading. Select up to 4 subjects to begin your mock exam.
+      <p style={{ color: 'var(--text-muted)', marginBottom: '1.5rem', fontSize: '1.25rem', lineHeight: '1.6' }}>
+        Experience the real CBT environment.
       </p>
+
+      <button className="btn btn-outline" style={{ marginBottom: '2rem' }} onClick={() => setShowSettings(!showSettings)}>
+        <Settings size={20} /> Settings
+      </button>
+
+      {showSettings && (
+        <div style={{ background: 'var(--surface-solid)', padding: '1.5rem', borderRadius: '16px', marginBottom: '2rem', textAlign: 'left', border: '1px solid var(--border)' }}>
+          <h3 style={{ marginBottom: '1rem' }}>Test Configuration</h3>
+          
+          <div style={{ marginBottom: '1rem' }}>
+            <label style={{ display: 'block', marginBottom: '0.5rem', fontWeight: 600 }}>Test Mode:</label>
+            <select 
+              value={examMode} 
+              onChange={(e) => setExamMode(e.target.value)}
+              style={{ width: '100%', padding: '0.8rem', borderRadius: '8px', background: 'var(--surface-hover)', color: 'var(--text-main)', border: '1px solid var(--border)' }}
+            >
+              <option value="practice">Practice Mode (Instant Feedback & Sound)</option>
+              <option value="exam">Exam Mode (Real JAMB Experience)</option>
+            </select>
+          </div>
+
+          <div>
+            <label style={{ display: 'block', marginBottom: '0.5rem', fontWeight: 600 }}>Questions Per Subject:</label>
+            <select 
+              value={questionsPerSubject} 
+              onChange={(e) => setQuestionsPerSubject(Number(e.target.value))}
+              style={{ width: '100%', padding: '0.8rem', borderRadius: '8px', background: 'var(--surface-hover)', color: 'var(--text-main)', border: '1px solid var(--border)' }}
+            >
+              <option value={10}>10 Questions (Quick Quiz)</option>
+              <option value={20}>20 Questions (Short Test)</option>
+              <option value={40}>40 Questions (Standard JAMB)</option>
+            </select>
+          </div>
+        </div>
+      )}
       
       <div className="subject-grid">
         {Object.keys(subjectsData).map(key => (
@@ -136,7 +214,7 @@ function App() {
         disabled={selectedSubjects.length === 0}
         style={{ marginTop: '2rem', width: '100%', padding: '1.25rem', fontSize: '1.25rem' }}
       >
-        Start Mock Exam ({selectedSubjects.length}/4) <ArrowRight size={24} />
+        Start {examMode === 'practice' ? 'Practice' : 'Exam'} ({selectedSubjects.length}/4) <ArrowRight size={24} />
       </button>
     </div>
   );
@@ -144,9 +222,13 @@ function App() {
   const renderTesting = () => {
     const q = currentQuestions[currentQuestionIndex];
     const letters = ['A', 'B', 'C', 'D'];
+    const hasAnswered = answers[currentQuestionIndex] !== undefined;
     
     return (
-      <div className="glass-card" style={{ maxWidth: '1000px', margin: '0 auto', width: '100%', padding: '3rem' }}>
+      <div className="glass-card" style={{ maxWidth: '1000px', margin: '0 auto', width: '100%', padding: '3rem', position: 'relative' }}>
+        
+        {showCalculator && <Calculator onClose={() => setShowCalculator(false)} />}
+
         <div className="cbt-header">
           <div>
             <div className="subject-badge">{q.subject.toUpperCase()}</div>
@@ -154,28 +236,69 @@ function App() {
               Question {currentQuestionIndex + 1} <span style={{ color: 'var(--text-muted)', fontWeight: 500, fontSize: '1.2rem' }}>of {currentQuestions.length}</span>
             </div>
           </div>
-          <div className="timer">
-            <Clock size={24} />
-            {formatTime(timeLeft)}
+          
+          <div style={{ display: 'flex', gap: '1rem', alignItems: 'center' }}>
+            <button className="btn btn-outline" style={{ padding: '0.5rem 1rem' }} onClick={() => setShowCalculator(!showCalculator)}>
+              <CalcIcon size={20} /> Calculator
+            </button>
+            <div className="timer">
+              <Clock size={24} />
+              {formatTime(timeLeft)}
+            </div>
           </div>
         </div>
 
-        <div className="question-area" dangerouslySetInnerHTML={{ __html: q.text }} />
-
-        <div className="options-list">
-          {q.options.map((opt, idx) => (
-            <button 
-              key={idx}
-              className={`option-btn ${answers[currentQuestionIndex] === idx ? 'selected' : ''}`}
-              onClick={() => handleSelectOption(idx)}
-            >
-              <div className="option-letter">{letters[idx]}</div>
-              <span style={{ flex: 1, lineHeight: '1.5' }} dangerouslySetInnerHTML={{ __html: opt }} />
-            </button>
-          ))}
+        <div className="question-area">
+          <div dangerouslySetInnerHTML={{ __html: q.text }} />
+          {q.image && (
+            <div style={{ marginTop: '1.5rem', textAlign: 'center' }}>
+              <img src={q.image} alt="diagram" style={{ maxWidth: '100%', borderRadius: '8px', border: '1px solid var(--border)' }} />
+            </div>
+          )}
         </div>
 
-        <div className="cbt-footer">
+        <div className="options-list">
+          {q.options.map((opt, idx) => {
+            let optionClass = '';
+            let letterBg = '';
+            
+            if (hasAnswered) {
+              if (examMode === 'practice') {
+                if (idx === q.answer) {
+                  optionClass = 'correct-opt'; 
+                  letterBg = 'var(--secondary)';
+                } else if (idx === answers[currentQuestionIndex]) {
+                  optionClass = 'wrong-opt';
+                  letterBg = 'var(--danger)';
+                }
+              } else {
+                if (idx === answers[currentQuestionIndex]) {
+                  optionClass = 'selected';
+                }
+              }
+            }
+
+            return (
+              <button 
+                key={idx}
+                className={`option-btn ${optionClass}`}
+                onClick={() => handleSelectOption(idx)}
+                style={optionClass === 'correct-opt' ? { borderColor: 'var(--secondary)', background: 'rgba(16, 185, 129, 0.05)' } : optionClass === 'wrong-opt' ? { borderColor: 'var(--danger)', background: 'rgba(239, 68, 68, 0.05)' } : {}}
+              >
+                <div className="option-letter" style={letterBg ? { background: letterBg, color: 'white' } : {}}>{letters[idx]}</div>
+                <span style={{ flex: 1, lineHeight: '1.5' }} dangerouslySetInnerHTML={{ __html: opt }} />
+              </button>
+            )
+          })}
+        </div>
+
+        {examMode === 'practice' && hasAnswered && q.explanation && q.explanation.length > 5 && (
+          <div className="explanation" style={{ marginTop: '2rem' }}>
+            <strong style={{ color: 'var(--text-main)' }}>Explanation:</strong> <span dangerouslySetInnerHTML={{ __html: q.explanation }} />
+          </div>
+        )}
+
+        <div className="cbt-footer" style={{ flexWrap: 'wrap', gap: '1rem' }}>
           <button 
             className="btn btn-outline"
             onClick={() => setCurrentQuestionIndex(prev => Math.max(0, prev - 1))}
@@ -184,30 +307,47 @@ function App() {
             <ArrowLeft size={20} /> Previous
           </button>
           
-          {currentQuestionIndex === currentQuestions.length - 1 ? (
-            <button className="btn btn-primary" style={{ background: 'var(--secondary)' }} onClick={submitExam}>
-              Submit Exam <CheckCircle2 size={20} />
-            </button>
-          ) : (
-            <button 
-              className="btn btn-primary"
-              onClick={() => setCurrentQuestionIndex(prev => Math.min(currentQuestions.length - 1, prev + 1))}
-            >
-              Next <ArrowRight size={20} />
-            </button>
-          )}
+          <button className="btn btn-primary" style={{ background: 'var(--danger)' }} onClick={submitExam}>
+            <LogOut size={20} /> End Exam Early
+          </button>
+
+          <button 
+            className="btn btn-primary"
+            onClick={() => {
+              if (currentQuestionIndex === currentQuestions.length - 1) {
+                submitExam();
+              } else {
+                setCurrentQuestionIndex(prev => Math.min(currentQuestions.length - 1, prev + 1))
+              }
+            }}
+          >
+            {currentQuestionIndex === currentQuestions.length - 1 ? 'Submit Exam' : 'Next Question'} <ArrowRight size={20} />
+          </button>
         </div>
 
         <div className="nav-grid">
-          {currentQuestions.map((_, idx) => (
-            <button 
-              key={idx}
-              className={`nav-btn ${answers[idx] !== undefined ? 'answered' : ''} ${currentQuestionIndex === idx ? 'active' : ''}`}
-              onClick={() => setCurrentQuestionIndex(idx)}
-            >
-              {idx + 1}
-            </button>
-          ))}
+          {currentQuestions.map((_, idx) => {
+            let cls = '';
+            if (answers[idx] !== undefined) {
+              if (examMode === 'practice') {
+                cls = answers[idx] === currentQuestions[idx].answer ? 'answered-correct' : 'answered-wrong';
+              } else {
+                cls = 'answered';
+              }
+            }
+            if (currentQuestionIndex === idx) cls += ' active';
+            
+            return (
+              <button 
+                key={idx}
+                className={`nav-btn ${cls}`}
+                onClick={() => setCurrentQuestionIndex(idx)}
+                style={cls.includes('answered-correct') ? { background: 'var(--secondary)', color: 'white', borderColor: 'var(--secondary)' } : cls.includes('answered-wrong') ? { background: 'var(--danger)', color: 'white', borderColor: 'var(--danger)' } : {}}
+              >
+                {idx + 1}
+              </button>
+            )
+          })}
         </div>
       </div>
     );
@@ -230,7 +370,7 @@ function App() {
           </div>
           
           <button className="btn btn-primary" onClick={() => { setGameState('home'); setSelectedSubjects([]); }} style={{ padding: '1rem 3rem' }}>
-            <RefreshCw size={20} /> Take Another Mock Exam
+            <RefreshCw size={20} /> Go to Dashboard
           </button>
         </div>
 
@@ -247,6 +387,7 @@ function App() {
                   <div style={{ fontSize: '1.2rem', fontWeight: 600 }}>
                     <span style={{ color: 'var(--text-muted)' }}>Q{idx + 1} ({q.subject})</span>
                     <div style={{ marginTop: '0.5rem', color: 'var(--text-main)', fontWeight: 500 }} dangerouslySetInnerHTML={{ __html: q.text }} />
+                    {q.image && <img src={q.image} alt="diagram" style={{ maxWidth: '100%', marginTop: '1rem', borderRadius: '8px' }} />}
                   </div>
                 </div>
                 
