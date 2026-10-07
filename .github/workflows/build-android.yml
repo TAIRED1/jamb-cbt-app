@@ -43,5 +43,5 @@ jobs:
     - name: Upload APK Artifact
       uses: actions/upload-artifact@v4
       with:
-        name: TAILORED_JAMB_CBT_PRACTICE.apk
+        name: TAIRED_JAMB_CBT_2026_2027.apk
         path: android/app/build/outputs/apk/debug/app-debug.apk

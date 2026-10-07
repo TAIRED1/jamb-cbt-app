@@ -1,16 +1,16 @@
 @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
 
 :root {
-  --bg-main: #060B14;
-  --bg-card: #101826;
+  --bg-main: #0B111A;
+  --bg-card: #131C2A;
   --bg-card-hover: #1A2639;
-  --primary: #00E676;
-  --primary-dark: #00C853;
-  --primary-glow: rgba(0, 230, 118, 0.25);
+  --primary: #10B981; /* Mature Emerald Green */
+  --primary-dark: #059669;
+  --primary-glow: rgba(16, 185, 129, 0.25);
   
-  --text-main: #FFFFFF;
-  --text-muted: #8B9BB4;
-  --border: #1E293B;
+  --text-main: #F3F4F6;
+  --text-muted: #9CA3AF;
+  --border: #1F2937;
   
   --color-purple: #8B5CF6;
   --color-blue: #3B82F6;
@@ -35,6 +35,11 @@ body {
   flex-direction: column;
 }
 
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
 .app-container {
   flex: 1;
   display: flex;
@@ -45,6 +50,7 @@ body {
   position: relative;
   background-color: var(--bg-main);
   overflow-x: hidden;
+  animation: fadeIn 0.4s ease-out;
 }
 
 /* =========================================

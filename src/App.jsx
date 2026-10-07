@@ -3,7 +3,7 @@ import subjectsData from './data/offline_questions.json';
 import { 
   Home, Target, PlayCircle, FileText, Calendar, 
   Settings, Bell, ArrowRight, ArrowLeft,
-  CheckCircle2, XCircle, Calculator as CalcIcon, Flag, RefreshCw, X, Lightbulb, BellRing, User, ChevronRight, Moon, BookOpen, Clock, LogOut
+  CheckCircle2, XCircle, Calculator as CalcIcon, Flag, RefreshCw, X, Lightbulb, BellRing, User, ChevronRight, Moon, BookOpen, Clock, LogOut, Bookmark
 } from 'lucide-react';
 import Calculator from './Calculator';
 import './Calculator.css';
@@ -12,7 +12,7 @@ function App() {
   const [user, setUser] = useState(null);
   const [loginName, setLoginName] = useState('');
   
-  const [currentTab, setCurrentTab] = useState('home'); // home, practice, mock, subjects, settings, plan
+  const [currentTab, setCurrentTab] = useState('home'); // home, practice, mock, subjects, settings, plan, bookmarks
   const [gameState, setGameState] = useState('dashboard'); // dashboard, testing, feedback, results
   
   const [selectedSubjects, setSelectedSubjects] = useState([]);
@@ -29,19 +29,17 @@ function App() {
   const [soundEnabled, setSoundEnabled] = useState(true);
   const [showNotifications, setShowNotifications] = useState(false);
   const [stats, setStats] = useState({});
+  const [flagged, setFlagged] = useState([]);
 
   // Initialize Data
   useEffect(() => {
     const savedUser = localStorage.getItem('jamb_user');
-    if (savedUser) {
-      setUser(JSON.parse(savedUser));
-    }
+    if (savedUser) setUser(JSON.parse(savedUser));
     
     const savedStats = localStorage.getItem('jamb_stats');
     if (savedStats) {
       setStats(JSON.parse(savedStats));
     } else {
-      // Initialize stats
       const initStats = {};
       Object.keys(subjectsData).forEach(sub => {
         initStats[sub] = { answered: 0, correct: 0, total: subjectsData[sub].questions.length };
@@ -49,6 +47,9 @@ function App() {
       setStats(initStats);
       localStorage.setItem('jamb_stats', JSON.stringify(initStats));
     }
+
+    const savedFlagged = localStorage.getItem('jamb_flagged');
+    if (savedFlagged) setFlagged(JSON.parse(savedFlagged));
   }, []);
 
   // Timer
@@ -72,7 +73,7 @@ function App() {
     if (loginName.trim().length < 2) return;
     const newUser = {
       name: loginName.trim(),
-      avatar: `https://api.dicebear.com/9.x/avataaars/svg?seed=${encodeURIComponent(loginName)}&backgroundColor=00E676,8B5CF6,3B82F6`
+      avatar: `https://api.dicebear.com/9.x/avataaars/svg?seed=${encodeURIComponent(loginName)}&backgroundColor=10B981,8B5CF6,3B82F6`
     };
     setUser(newUser);
     localStorage.setItem('jamb_user', JSON.stringify(newUser));
@@ -94,6 +95,17 @@ function App() {
         setSelectedSubjects(prev => [...prev, subjectKey]);
       }
     }
+  };
+
+  const toggleFlag = (q) => {
+    let newFlagged;
+    if (flagged.find(f => f.text === q.text)) {
+      newFlagged = flagged.filter(f => f.text !== q.text);
+    } else {
+      newFlagged = [...flagged, q];
+    }
+    setFlagged(newFlagged);
+    localStorage.setItem('jamb_flagged', JSON.stringify(newFlagged));
   };
 
   const playSound = (isCorrect) => {
@@ -157,11 +169,25 @@ function App() {
     setShowCalculator(false);
   };
 
+  const startBookmarksPractice = () => {
+    if (flagged.length === 0) return;
+    setExamMode('practice');
+    // Shuffle flagged questions
+    const combined = [...flagged].sort(() => 0.5 - Math.random());
+    setCurrentQuestions(combined);
+    setAnswers({});
+    setCurrentQuestionIndex(0);
+    const duration = combined.length * 60;
+    setTimeLeft(duration); 
+    setTotalTime(duration);
+    setGameState('testing');
+    setShowCalculator(false);
+  };
+
   const finishExam = () => {
-    // Update Stats in local storage
     const newStats = { ...stats };
     currentQuestions.forEach((q, idx) => {
-      if (answers[idx] !== undefined) {
+      if (answers[idx] !== undefined && q.subjectKey) { // Skip if it's a bookmark without subjectKey
         newStats[q.subjectKey].answered = Math.min(newStats[q.subjectKey].answered + 1, newStats[q.subjectKey].total);
         if (answers[idx] === q.answer) {
           newStats[q.subjectKey].correct += 1;
@@ -182,9 +208,7 @@ function App() {
   };
 
   const handleSelectOption = (optionIndex) => {
-    if (examMode === 'practice' && answers[currentQuestionIndex] !== undefined) {
-      return; // already answered
-    }
+    if (examMode === 'practice' && answers[currentQuestionIndex] !== undefined) return;
 
     setAnswers(prev => ({
       ...prev,
@@ -213,7 +237,7 @@ function App() {
          <div style={{width:'80px', height:'80px', background:'var(--primary)', borderRadius:'20px', margin:'0 auto 1.5rem', display:'flex', alignItems:'center', justifyContent:'center'}}>
            <BookOpen size={40} color="var(--bg-main)" />
          </div>
-         <h1 style={{color:'var(--text-main)', marginBottom:'0.5rem', fontSize:'1.5rem'}}>Welcome to JAMB CBT</h1>
+         <h1 style={{color:'var(--text-main)', marginBottom:'0.5rem', fontSize:'1.5rem'}}>TAIRED JAMB CBT <br/><span style={{fontSize:'1.1rem', color:'var(--primary)'}}>2026/2027</span></h1>
          <p style={{color:'var(--text-muted)', marginBottom:'2rem', fontSize:'0.9rem'}}>Enter your name to start practicing offline.</p>
          <input 
            type="text" 
@@ -225,7 +249,7 @@ function App() {
          <button 
             className="btn-full btn-primary-full" 
             onClick={handleLogin}
-            style={{opacity: loginName.length > 1 ? 1 : 0.5}}
+            style={{opacity: loginName.length > 1 ? 1 : 0.5, transition: 'all 0.3s'}}
             disabled={loginName.length < 2}
          >
             Start Learning <ArrowRight size={18} style={{display:'inline', verticalAlign:'middle', marginLeft:'0.5rem'}}/>
@@ -238,16 +262,16 @@ function App() {
     <>
       <div className="dashboard-header">
         <div className="user-info">
-          <div className="avatar" style={{border:'2px solid var(--primary)', padding:'2px'}}>
+          <div className="avatar" style={{border:'2px solid var(--primary)', padding:'2px', background:'var(--bg-main)'}}>
             <img src={user.avatar} alt="avatar" style={{width:'100%', height:'100%', borderRadius:'50%'}} />
           </div>
           <div className="welcome-text">
             <p>Welcome back,</p>
-            <h1>{user.name} <span style={{fontSize:'1.2rem'}}>👑</span></h1>
+            <h1>{user.name} <span style={{fontSize:'1.2rem'}}>🎓</span></h1>
           </div>
         </div>
         <div className="header-actions">
-          <div className="icon-btn" onClick={() => setShowNotifications(true)}>
+          <div className="icon-btn" onClick={() => setShowNotifications(!showNotifications)}>
             <Bell size={20} />
             <div className="notification-dot"></div>
           </div>
@@ -255,7 +279,7 @@ function App() {
       </div>
 
       {showNotifications && (
-        <div style={{position:'absolute', top:'70px', right:'1.5rem', background:'var(--bg-card)', border:'1px solid var(--border)', borderRadius:'16px', padding:'1rem', zIndex:100, width:'250px', boxShadow:'0 10px 30px rgba(0,0,0,0.5)'}}>
+        <div style={{position:'absolute', top:'70px', right:'1.5rem', background:'var(--bg-card)', border:'1px solid var(--border)', borderRadius:'16px', padding:'1rem', zIndex:100, width:'250px', boxShadow:'0 10px 30px rgba(0,0,0,0.5)', animation:'fadeIn 0.2s ease-out'}}>
           <div style={{display:'flex', justifyContent:'space-between', alignItems:'center', marginBottom:'1rem'}}>
              <h4 style={{fontWeight:700}}>Notifications</h4>
              <X size={16} color="var(--text-muted)" onClick={()=>setShowNotifications(false)} style={{cursor:'pointer'}}/>
@@ -292,10 +316,10 @@ function App() {
 
       <div className="actions-grid">
         <div className="action-card" onClick={() => { setExamMode('practice'); setCurrentTab('subjects'); }} style={{
-          backgroundImage: `linear-gradient(to bottom, rgba(16,24,38,0.8), rgba(16,24,38,0.95)), url('https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=400&q=80')`,
+          backgroundImage: `linear-gradient(to bottom, rgba(11,17,26,0.8), rgba(11,17,26,0.95)), url('https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=400&q=80')`,
           backgroundSize: 'cover', backgroundPosition: 'center'
         }}>
-          <div className="action-icon" style={{background: 'rgba(0, 230, 118, 0.15)', color: 'var(--primary)'}}>
+          <div className="action-icon" style={{background: 'rgba(16, 185, 129, 0.15)', color: 'var(--primary)'}}>
             <PlayCircle size={24} />
           </div>
           <div>
@@ -308,7 +332,7 @@ function App() {
         </div>
 
         <div className="action-card" onClick={() => { setExamMode('exam'); setCurrentTab('subjects'); }} style={{
-          backgroundImage: `linear-gradient(to bottom, rgba(16,24,38,0.8), rgba(16,24,38,0.95)), url('https://images.unsplash.com/photo-1606326608606-aa0b62935f2b?w=400&q=80')`,
+          backgroundImage: `linear-gradient(to bottom, rgba(11,17,26,0.8), rgba(11,17,26,0.95)), url('https://images.unsplash.com/photo-1606326608606-aa0b62935f2b?w=400&q=80')`,
           backgroundSize: 'cover', backgroundPosition: 'center'
         }}>
           <div className="action-icon" style={{background: 'rgba(139, 92, 246, 0.15)', color: 'var(--color-purple)'}}>
@@ -316,12 +340,34 @@ function App() {
           </div>
           <div>
             <h3 style={{color:'var(--text-main)'}}>Take Mock Exam</h3>
-            <p>Simulate the real JAMB experience (CBT style).</p>
+            <p>Simulate the real JAMB experience.</p>
           </div>
           <div className="action-arrow">
             <ArrowRight size={16} color="var(--color-purple)" />
           </div>
         </div>
+
+        {flagged.length > 0 && (
+          <div className="action-card" onClick={() => startBookmarksPractice()} style={{
+            gridColumn: '1 / -1',
+            backgroundImage: `linear-gradient(to right, rgba(11,17,26,0.9), rgba(11,17,26,0.98)), url('https://images.unsplash.com/photo-1481627834876-b7833e8f5570?w=800&q=80')`,
+            backgroundSize: 'cover', backgroundPosition: 'center',
+            flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between'
+          }}>
+            <div style={{display:'flex', alignItems:'center', gap:'1rem'}}>
+              <div className="action-icon" style={{background: 'rgba(245, 158, 11, 0.15)', color: 'var(--color-orange)'}}>
+                <Bookmark size={24} />
+              </div>
+              <div>
+                <h3 style={{color:'var(--text-main)'}}>Review Bookmarks</h3>
+                <p>You have {flagged.length} flagged questions to revise.</p>
+              </div>
+            </div>
+            <div className="action-arrow">
+              <ArrowRight size={16} color="var(--color-orange)" />
+            </div>
+          </div>
+        )}
       </div>
 
       <div className="subjects-section">
@@ -339,7 +385,7 @@ function App() {
               const color = colors[i % colors.length];
               
               return (
-                <div key={subKey} style={{background:'var(--bg-card)', padding:'1rem', borderRadius:'16px', border:'1px solid var(--border)'}}>
+                <div key={subKey} style={{background:'var(--bg-card)', padding:'1rem', borderRadius:'16px', border:'1px solid var(--border)', transition:'transform 0.2s', cursor:'pointer'}} onClick={()=>setCurrentTab('subjects')}>
                   <div style={{display:'flex', gap:'0.5rem', alignItems:'center', marginBottom:'1rem'}}>
                     <div style={{background:`rgba(255,255,255,0.05)`, padding:'0.5rem', borderRadius:'8px', color: color}}>
                       {icons[i % icons.length]}
@@ -357,7 +403,6 @@ function App() {
   );
 
   const renderPlan = () => {
-    // Generate some mock recommendations based on stats
     const weakSubjects = Object.keys(stats).filter(s => stats[s].answered > 0 && (stats[s].correct / stats[s].answered) < 0.6);
     
     return (
@@ -387,7 +432,7 @@ function App() {
                      <h4 style={{color:'var(--color-orange)', marginBottom:'0.2rem'}}>{subjectsData[subKey]?.name}</h4>
                      <p style={{fontSize:'0.85rem', color:'var(--text-muted)'}}>Accuracy is below 60%. Needs review.</p>
                    </div>
-                   <button onClick={()=>{ toggleSubject(subKey); setCurrentTab('subjects'); setExamMode('practice'); }} style={{background:'rgba(245, 158, 11, 0.1)', color:'var(--color-orange)', border:'none', padding:'0.5rem 1rem', borderRadius:'8px', fontWeight:600, cursor:'pointer'}}>
+                   <button onClick={()=>{ setSelectedSubjects([subKey]); setExamMode('practice'); setCurrentTab('subjects'); }} style={{background:'rgba(245, 158, 11, 0.1)', color:'var(--color-orange)', border:'none', padding:'0.5rem 1rem', borderRadius:'8px', fontWeight:600, cursor:'pointer'}}>
                      Revise
                    </button>
                 </div>
@@ -419,9 +464,10 @@ function App() {
             key={key} 
             className={`subject-list-item ${isSelected ? 'selected' : ''}`}
             onClick={() => toggleSubject(key)}
+            style={{transition: 'all 0.3s ease'}}
           >
             <div className="subject-list-item-left">
-              <div className="subject-list-icon" style={{background: isSelected ? 'var(--primary)' : 'var(--bg-card-hover)'}}>
+              <div className="subject-list-icon" style={{background: isSelected ? 'var(--primary)' : 'var(--bg-card-hover)', transition: 'background 0.3s'}}>
                 <BookOpen size={20} color={isSelected ? 'var(--bg-main)' : 'var(--text-main)'}/>
               </div>
               <div>
@@ -438,7 +484,7 @@ function App() {
         className="btn-full btn-primary-full" 
         onClick={() => startExam()}
         disabled={selectedSubjects.length === 0}
-        style={{marginTop: '2rem', opacity: selectedSubjects.length === 0 ? 0.5 : 1}}
+        style={{marginTop: '2rem', opacity: selectedSubjects.length === 0 ? 0.5 : 1, transition: 'all 0.3s'}}
       >
         Start {examMode === 'practice' ? 'Practice' : 'Mock Exam'} {selectedSubjects.length > 0 ? `(${selectedSubjects.length})` : ''}
       </button>
@@ -512,9 +558,10 @@ function App() {
     const q = currentQuestions[currentQuestionIndex];
     const letters = ['A', 'B', 'C', 'D'];
     const hasAnswered = answers[currentQuestionIndex] !== undefined;
+    const isFlagged = flagged.find(f => f.text === q.text) !== undefined;
     
     return (
-      <div style={{display:'flex', flexDirection:'column', flex:1}}>
+      <div style={{display:'flex', flexDirection:'column', flex:1, animation:'fadeIn 0.3s ease-out'}}>
         {showCalculator && <Calculator onClose={() => setShowCalculator(false)} />}
 
         <div className="test-header">
@@ -532,7 +579,7 @@ function App() {
               <Clock size={18} />
               {formatTime(timeLeft)}
             </div>
-            <Settings size={20} color="var(--text-muted)" onClick={() => setShowCalculator(!showCalculator)} />
+            <Settings size={20} color="var(--text-muted)" onClick={() => setShowCalculator(!showCalculator)} style={{cursor:'pointer'}} />
           </div>
         </div>
 
@@ -541,14 +588,14 @@ function App() {
             {currentQuestionIndex + 1} / {currentQuestions.length}
           </div>
           <div className="test-progress-bar">
-            <div className="test-progress-fill" style={{width: `${((currentQuestionIndex + 1) / currentQuestions.length) * 100}%`}}></div>
+            <div className="test-progress-fill" style={{width: `${((currentQuestionIndex + 1) / currentQuestions.length) * 100}%`, transition:'width 0.3s ease-out'}}></div>
           </div>
         </div>
 
         <div className="test-content">
           <div className="subject-pill">
             <BookOpen size={14} />
-            {q.subject}
+            {q.subject || 'Mixed'}
           </div>
 
           <div className="question-text" dangerouslySetInnerHTML={{ __html: q.text }} />
@@ -588,6 +635,7 @@ function App() {
               className="btn-test-nav btn-prev"
               onClick={() => setCurrentQuestionIndex(prev => Math.max(0, prev - 1))}
               disabled={currentQuestionIndex === 0}
+              style={{opacity: currentQuestionIndex === 0 ? 0.5 : 1}}
             >
               Previous
             </button>
@@ -611,8 +659,8 @@ function App() {
           <button className="footer-tool-btn" onClick={() => setShowCalculator(!showCalculator)}>
             <CalcIcon size={20} /> Calculator
           </button>
-          <button className="footer-tool-btn">
-            <Flag size={20} /> Flag
+          <button className="footer-tool-btn" onClick={() => toggleFlag(q)} style={{color: isFlagged ? 'var(--color-orange)' : 'var(--text-muted)'}}>
+            <Bookmark size={20} fill={isFlagged ? 'var(--color-orange)' : 'none'}/> {isFlagged ? 'Bookmarked' : 'Bookmark'}
           </button>
         </div>
       </div>
@@ -625,7 +673,7 @@ function App() {
 
     return (
       <div style={{position:'absolute', top:0, left:0, right:0, bottom:0, overflow:'hidden', zIndex:99}}>
-        <div style={{position:'absolute', top:0, left:0, right:0, bottom:0, background:'rgba(0,0,0,0.5)'}} onClick={()=>setGameState('testing')}></div>
+        <div style={{position:'absolute', top:0, left:0, right:0, bottom:0, background:'rgba(0,0,0,0.5)', animation:'fadeIn 0.2s ease'}} onClick={()=>setGameState('testing')}></div>
         <div className="feedback-modal">
           <div style={{display:'flex', justifyContent:'space-between', alignItems:'flex-start'}}>
              <div className="feedback-header">
@@ -680,7 +728,7 @@ function App() {
     const timeSpent = totalTime - timeLeft;
     
     return (
-      <div className="result-screen">
+      <div className="result-screen" style={{animation:'fadeIn 0.5s ease-out'}}>
         <button className="result-header" onClick={() => { setGameState('dashboard'); setCurrentTab('home'); }}>
           <ArrowLeft size={20} /> {examMode === 'practice' ? 'Practice' : 'Mock Exam'} Result
         </button>
@@ -698,7 +746,7 @@ function App() {
 
         <div className="stats-grid">
           <div className="stat-card">
-            <div className="stat-icon" style={{background: 'rgba(0, 230, 118, 0.1)', color: 'var(--primary)'}}>
+            <div className="stat-icon" style={{background: 'rgba(16, 185, 129, 0.1)', color: 'var(--primary)'}}>
               <CheckCircle2 size={20} />
             </div>
             <div className="stat-info">
@@ -768,7 +816,6 @@ function App() {
     </div>
   );
 
-  // If no user is logged in, show Login Screen
   if (!user) {
     return (
       <div className="app-container">
@@ -778,7 +825,7 @@ function App() {
   }
 
   return (
-    <div className="app-container">
+    <div className="app-container" key={gameState + currentTab}>
       {gameState === 'dashboard' && currentTab === 'home' && renderDashboard()}
       {gameState === 'dashboard' && currentTab === 'subjects' && renderSubjects()}
       {gameState === 'dashboard' && currentTab === 'plan' && renderPlan()}
