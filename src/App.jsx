@@ -708,6 +708,17 @@ function App() {
             {q.subject || 'JAMB Question'}
           </div>
 
+          {q.section && q.section.trim().length > 0 && (
+            <div className={`question-instruction ${
+              q.section.toLowerCase().includes('opposite') || q.section.toLowerCase().includes('antonym') 
+                ? 'antonym' 
+                : (q.section.toLowerCase().includes('nearest') || q.section.toLowerCase().includes('synonym') ? 'synonym' : '')
+            }`}>
+              <Lightbulb size={16} style={{flexShrink:0, marginTop:'2px'}} />
+              <div dangerouslySetInnerHTML={{ __html: q.section }} />
+            </div>
+          )}
+
           <div className="question-text" dangerouslySetInnerHTML={{ __html: q.text }} />
           {q.image && (
             <div style={{ marginBottom: '2rem' }}>
@@ -885,6 +896,17 @@ function App() {
                   {isCorrect ? 'Correct' : (isAnswered ? 'Wrong' : 'Unanswered')}
                 </span>
               </div>
+
+              {q.section && q.section.trim().length > 0 && (
+                <div className={`question-instruction ${
+                  q.section.toLowerCase().includes('opposite') || q.section.toLowerCase().includes('antonym') 
+                    ? 'antonym' 
+                    : (q.section.toLowerCase().includes('nearest') || q.section.toLowerCase().includes('synonym') ? 'synonym' : '')
+                }`} style={{marginBottom:'0.75rem', fontSize:'0.82rem', padding:'0.5rem 0.75rem'}}>
+                  <Lightbulb size={14} style={{flexShrink:0, marginTop:'2px'}} />
+                  <div dangerouslySetInnerHTML={{ __html: q.section }} />
+                </div>
+              )}
 
               <div style={{fontSize:'1rem', fontWeight:600, marginBottom:'1rem', lineHeight:1.5}} dangerouslySetInnerHTML={{ __html: q.text }} />
 
