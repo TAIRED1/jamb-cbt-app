@@ -721,8 +721,8 @@ function App() {
 
           <div className="question-text" dangerouslySetInnerHTML={{ __html: q.text }} />
           {q.image && (
-            <div style={{ marginBottom: '2rem' }}>
-              <img src={q.image} alt="diagram" style={{ maxWidth: '100%', borderRadius: '12px', border: '1px solid var(--border)' }} />
+            <div className="diagram-container">
+              <img src={q.image} alt="Question Diagram" className="diagram-img" />
             </div>
           )}
 
@@ -911,8 +911,8 @@ function App() {
               <div style={{fontSize:'1rem', fontWeight:600, marginBottom:'1rem', lineHeight:1.5}} dangerouslySetInnerHTML={{ __html: q.text }} />
 
               {q.image && (
-                <div style={{ marginBottom: '1rem' }}>
-                  <img src={q.image} alt="diagram" style={{ maxWidth: '100%', borderRadius: '10px', border: '1px solid var(--border)' }} />
+                <div className="diagram-container" style={{marginBottom:'1rem', padding:'0.75rem'}}>
+                  <img src={q.image} alt="Question Diagram" className="diagram-img" style={{maxHeight:'220px'}} />
                 </div>
               )}
 
