@@ -11192,18 +11192,6 @@
     "name": "Mathematics",
     "questions": [
       {
-        "id": 659,
-        "text": " From the table above, find the median and range of the data respectively.",
-        "options": [
-          "(8,5)",
-          "(3, 5)",
-          "(5 , 8)",
-          " (5 , 3)"
-        ],
-        "answer": 1,
-        "explanation": "Median = ∑fx/∑f \n \n\n∑fx = 0 + 4 + 6 + 24 + 8 + 25 = 67\n\n∑f = 23\n\nMedian = ∑fx/∑f = 67/23 =2.913\n\n= ≈ 3\n\nRange = 5 - 0 = 5\n\n(3, 5)"
-      },
-      {
         "id": 749,
         "text": "If y = x<sup>2</sup>  - 1/x, find δy/δx",
         "options": [
@@ -11250,18 +11238,6 @@
         ],
         "answer": 2,
         "explanation": "Capacity = Volume = 3080m3<sup>3</sup>\n\nbase diameter = 14m\n\nradius = diameter/2\n\n\n= 7m\n\nVolume of Cylidner = Capacity of cylinder\n\nπr<sup>2</sup>h = 3080\n\n22/7 × 7 × 7 × h = 3080\n\nh = 3080/22×7\n\n\nh = 20m"
-      },
-      {
-        "id": 316,
-        "text": "The shaded region in the venn diagram above is",
-        "options": [
-          "P° ∩ \n(Q ∩\n R)",
-          "P ∩\n Q",
-          "P° ∪ \n(Q ∩\n R)",
-          "P° ∪ \n(Q  ∪ \n R)"
-        ],
-        "answer": 0,
-        "explanation": "No explanation provided."
       },
       {
         "id": 239,
@@ -11444,18 +11420,6 @@
         "explanation": "log<sub>10</sub> 2 = 0.3010 and log<sub>10</sub> 3 = 04771\n\nlog<sub>10</sub> 4.5 = log<sub>10</sub>  ((3 × 3)/2)\n\nlog<sub>10</sub>  3 + log<sub>10</sub>  3 - log<sub>10</sub> 2 = 0.4471 + 0.771 - 0.3010\n= 0.6532"
       },
       {
-        "id": 903,
-        "text": "In the diagram above MN is a chord of a circle KMN centre O and radius 10cm. If < MON = 140°, find, to the nearest cm, the length of the chord MN.",
-        "options": [
-          "10cm",
-          "19cm",
-          "17cm",
-          "12cm"
-        ],
-        "answer": 1,
-        "explanation": "Find the diagram\nSin 70°\n\nx = 10 Sin 70°\n\n= 9.3969\n\nHence, length of chord MN = 2x\n\n= 2 × 9.3969\n\n= 18.79\n\n= 19cm (nearest cm)"
-      },
-      {
         "id": 178,
         "text": "If dy/dx = 2x - 3 and y = 3 when x = 0, find y in terms of x.",
         "options": [
@@ -11478,18 +11442,6 @@
         ],
         "answer": 3,
         "explanation": " <sup>n+1</sup>C<sub>3</sub = 4 (<sup> n</sup> C<sub>3</sub>)frac(n+1)!(n+1-3)!3!=4(n!/((n-3)!3!))frac(n+1)n!(n-2)(n-3)!=4(n!/(n-3!))\"\\=\"  (n+1)/(n-2)=4/1 \"\\n\"+1=4(n-2)\"\\n\"+1=4n-8\"\\-\" 3n=-9frac-9-3\"\\n\"=3"
-      },
-      {
-        "id": 111,
-        "text": "In the diagram above, if ∠RPS = 50°, ∠RPQ = 30° and PQ = QR, find the value of ∠PRS.",
-        "options": [
-          " 80°",
-          "70°",
-          "60°",
-          "50°"
-        ],
-        "answer": 1,
-        "explanation": "Δ PQR is isosceles\n∴∠PRQ = 30°\nAlso in Δ PQR\n^Q = 180 -(30 + 30)\n= 120°\nPQRS is a cyclic quad\n∴^S + ^Q = 180(opp ∠s of a cyclic quad)\nS + 120 = 180\nS = 60°\nIn ΔPSR\nx + 50 + 60\n= 180(sum of ∠s of a Δ)\nx + 110 = 180\nx = 180 - 110\nx = 70°"
       },
       {
         "id": 134,
@@ -11718,30 +11670,6 @@
         ],
         "answer": 3,
         "explanation": "θ = 45 x 2 (∠ at center twice ∠ at θ)\nθ = 90\nArea of sector = θ/360 x πr<sup>2</sup>\n= 90/360 x 22/7 x 7 x 7\n= 77/2cm<sup>2</sup>\nArea of triangle = 1/2 ab sin θ\n= 1/2 x 7 x 7 sin 90\n= 1/2 x 7 x 7 x 1\n= 49/2\nArea of shaded region = 77/2 - 49/2\n1\t1\n2\n\n= 28/2\n= 14cm<sup>2</sup>"
-      },
-      {
-        "id": 405,
-        "text": "In the diagram above, PQ = 10 cm, PS = 8 cm and ∠PSR is 60o while ∠SRQ is a right angle. Find SR",
-        "options": [
-          "14 cm",
-          "14√3 cm",
-          "10 cm",
-          "10√3 cm"
-        ],
-        "answer": 0,
-        "explanation": "In ΔPST; cos 60 = ST/8\nST = 8cos 60\nST = 8 x 1/2 = 4\nTR = 10 cm (opp. sides of a rectangle PQRT)\nSR = ST + TR\nSR = 4 + 10\nSR = 14 cm"
-      },
-      {
-        "id": 495,
-        "text": "In the diagram above ∠ OPQ is",
-        "options": [
-          "90°",
-          "53°",
-          "36°",
-          "26°"
-        ],
-        "answer": 1,
-        "explanation": "a = a(base ∠ s of Iss Δ)\n− a+a+74 = 180\n2a + 74 = 180\n2a = 180-74\n2a = 106\na = 53\n−∠ OPQ = 53°"
       },
       {
         "id": 351,
@@ -12092,18 +12020,6 @@
         "explanation": "P (X or Y) = P(X) + P(Y), when they are independent as given.\n0.7 = 0.4 + P(Y)\nP(Y) = 0.7 - 0.4 = 0.30"
       },
       {
-        "id": 214,
-        "text": "In the diagram above, PST is a straight line, PQ = QS = RS. If ∠RST = 72°, find x",
-        "options": [
-          "36°",
-          "18°",
-          "72°",
-          "24°"
-        ],
-        "answer": 3,
-        "explanation": "In Δ PQS, ∠PSQ = X(base ∠s of isoc Δ PQS)\nIn Δ QRS, ∠RQS = ∠PSQ + X(Extr ∠ = sum of two intr. opp ∠s)\n∴ ∠RQS = X + X\n= 2X\nAlso ∠QRS = 2X(base ∠s of isoc Δ QRS in Δ PRS,\n72 = ∠RPS + ∠PRS(Extr, ∠ = sum of two intr. opp ∠s)\n∴ 72 = x + 2x\n72 = 3x\nx = 72/3\nx = 24°"
-      },
-      {
         "id": 1245,
         "text": "A man with an annual salary of N2000, has allowances of N600. If Income Tax is 5%. How much income tax expenses does he pay each year?",
         "options": [
@@ -12308,18 +12224,6 @@
         "explanation": "The modal age is the age with the highest frequency, and that is age 5 years with f of 7"
       },
       {
-        "id": 589,
-        "text": "from the table above, if the pass mark is 5, how many students failed the test?",
-        "options": [
-          "6",
-          "2",
-          "7",
-          "9"
-        ],
-        "answer": 3,
-        "explanation": "No explanation provided."
-      },
-      {
         "id": 1203,
         "text": "The 4th term of an A.P. is 13 while the 10th term is 31. Find the 24th term.",
         "options": [
@@ -12356,18 +12260,6 @@
         "explanation": "Length of an arc = θ/360 x 2πr\n90/360 x 2 x π x 7\n= 7π/2"
       },
       {
-        "id": 319,
-        "text": "In the diagram above, PQ = 4cm and TS = 6cm. If the area of parallelogram PQTU is 32cm<sup>2</sup>, find the area of trapezium PQRU",
-        "options": [
-          "24 cm<sup>2</sup>",
-          "48 cm<sup>2</sup>",
-          "60 cm<sup>2</sup>",
-          "72 cm<sup>2</sup>"
-        ],
-        "answer": 0,
-        "explanation": "No explanation provided."
-      },
-      {
         "id": 1239,
         "text": "If three staff of Myschool Limited agreed to share their salary arrears in the ration of their ages, which are 18 years, 20 years, 22 years respectively. If the sum of the money collected is N120,000.00K, How much does the second staff received?",
         "options": [
@@ -12390,18 +12282,6 @@
         ],
         "answer": 0,
         "explanation": "=(2√2-√3)/(√2+√3) × (√2-√3)/(√2-√3)  =(2√2(√2)+(2√2)(-√3)-√3(√2)-√3(-√3))/((√2 )<sup>2</sup>-(√3 )<sup>2</sup>)  =(2×2-2√6-√6+3)/(2-3)             = 4−3√6+3/(−1)                             =7−3√6/−1\n=7/−1 − 3√6/−1 =-7 + 3√6  = 3√6 - 7 "
-      },
-      {
-        "id": 289,
-        "text": "The pie chart above shows the distribution of the crops harvested from a farmland in a year. If 3000 tonnes of millet is harvested, what amount of beans is harvested",
-        "options": [
-          "6000 tonnes",
-          "1500 tonnes",
-          " 1200 tonnes",
-          "9000 tonnes"
-        ],
-        "answer": 2,
-        "explanation": "Sectorial angle of beans = 360 - (150 + 90 + 60)\n= 360 -300\n= 60°\nif 150° represents 3000 tonnes\n1o 3000/150\n60° will represents (3000/150) * (60/1)\n= 1200 tonnes"
       },
       {
         "id": 145,
@@ -12788,18 +12668,6 @@
         "explanation": "Volume of cube = L<sup>3</sup>\n\n3<sup>3</sup> = 27cm<sup>3</sup>\n\nvolume of rectangular tank = L x B X h\n\n= 3 x 4 x 5\n\n= 60cm<sup>3</sup>\n\nvolume of H<sub>2</sub> O the tank can now hold\n\n= volume of rectangular tank - volume of cube\n\n= 60 - 27\n\n= 33cm<sup>3</sup>"
       },
       {
-        "id": 216,
-        "text": "In the diagram above, a cylinder is summounted by a hemisphere bowl. Calculate the volume of the solid.",
-        "options": [
-          "180 πcm<sup>3</sup>",
-          "162 πcm<sup>3</sup>",
-          "216 πcm<sup>3</sup>",
-          "198 πcm<sup>3</sup>"
-        ],
-        "answer": 3,
-        "explanation": "Volume of cylinder = πr<sup>2</sup>h\n= π x 3<sup>2</sup> x 20\n= π x 9 x 20\n= 180 πcm<sup>3</sup>\nVolume of hemisphere = 2/3πr<sup>3</sup>\n= 2/3 x π x 3<sup>2</sup>\n= 2 x π x 3<sup>2</sup>\n= 2 x π x 9\n= 18π\n= Volume of the solid = 180π x 18π\n= 198πcm<sup>3</sup>"
-      },
-      {
         "id": 1187,
         "text": "Find the value of 110111<sub>2</sub>  + 10100<sub>2</sub> ",
         "options": [
@@ -12894,18 +12762,6 @@
         ],
         "answer": 0,
         "explanation": "No explanation provided."
-      },
-      {
-        "id": 560,
-        "text": "The pie chart above represents 400 fruits on display in a grocery store. How many apples are in the store?\n",
-        "options": [
-          "45",
-          "50",
-          "60",
-          "75"
-        ],
-        "answer": 1,
-        "explanation": "Sectorial angle of apple\n100 + 100 + 115 + x = 30°\n315 + x = 360\nx = 360 - 315\nx = 45°\n360° represents 400\n1° represents 400 / 360\n45o represents (400/360) x (45/1)\n= 50 apples"
       },
       {
         "id": 1143,
@@ -13064,18 +12920,6 @@
         "explanation": "(16/81 )<sup>(1/4)</sup>÷(9/16 )<sup>(-1/2)</sup>                       (16/81))<sup>(1/4)</sup> ÷ (16/9)1/2\n\n\n(2<sup>4</sup>/3<sup>4</sup>))<sup>(1/4)</sup> ÷ (4<sup>2</sup>/3<sup>2</sup>)<sup>1/2</sup>\n\n\n2)<sup>4 x (1/4)</sup>/3<sup>4 x (1/4)</sup> ÷ 4<sup>2 x 1/2</sup> 3<sup>2 x 1/2</sup> \n\n2/3 ÷ 4/3\n\n\n2/3 × 3/4\n\n\n2/4\n\n\n1/2"
       },
       {
-        "id": 163,
-        "text": "In the figure above, PQR is a straight line segment, PQ = QT. Triangle PQT is an isosceles triangle, ∠SQR is 75o and ∠QPT is 25o. Calculate the value of ∠RST.",
-        "options": [
-          "45°",
-          "55°",
-          "25°",
-          "55°"
-        ],
-        "answer": 1,
-        "explanation": "n Δ PQT,\n∠PTQ = 25o(base ∠s of isosceles Δ)\nIn Δ QSR,\n∠RQS = ∠QPT + ∠QTP\n(Extr = sum of interior opposite ∠s)\n∠RQS = 25 + 25\n= 50°\nAlso in Δ QSR,\n75 + ∠RQS + ∠QSR = 180o\n(sum of ∠s of Δ)\n∴75 + 50 + ∠QSR = 180\n125 + ∠QSR = 180\n∠QSR = 180 - 125\n∠QSR = 55°\nBut ∠QSR and ∠RST are the same\n∠RST = 55°"
-      },
-      {
         "id": 223,
         "text": "Simplify 213<sub>4</sub>\n x 23<sub>4</sub>",
         "options": [
@@ -13086,18 +12930,6 @@
         ],
         "answer": 2,
         "explanation": "You can either multiply directly in base 4 or you can decide to convert to base 10 and do the multiplication and re-convert."
-      },
-      {
-        "id": 1231,
-        "text": "Find the value of x in the figure above",
-        "options": [
-          "20√3cm",
-          "10√3cm",
-          "5√3cm",
-          "4√3cm"
-        ],
-        "answer": 1,
-        "explanation": "In the figure above, x/sin 60° =10/sin30° (Sine rule)\n\nx = 10sin60°/sin30°\n\n\n= 10 x √3/2 × 1/2\n\n\n= 10 x √3/2 × 2/1\n\n\n= 10√3cm"
       },
       {
         "id": 781,
@@ -13424,18 +13256,6 @@
         "explanation": "3x + 2y + 4 = 0\nRearrange:\n\n2y = −3x − 4\nDivide both sides by 2\n\ny = (−3× − 4)/2\ny = −3/2×−2\n∴ the gradient of the line 3x + 2y + 4 = 0 is −3/2\nIf two lines are perpendicular to each other ∴ m<sub>1</sub>xm<sub>2</sub> = -1\n\nLet m<sub>1</sub> =−3/2 ∴ m<sub>2</sub> = −1/m<sub>1</sub> = −1/(−3/2) = 2/3\nFrom the equation of a line which is given as m = (y − y<sub>1</sub>)/x − x<sub>1</sub>) where (x<sub>1</sub>, y<sub>1</sub>) = (2, 3)\n∴ 2/3 = (y − 3)/x − 2)\n=3(y  -  3) = 2(x  -  2)\n\n= 3y  -  9  =  2  x  -4\n\n= 3y  =  2  x  -4  +  9\n\n∴ 3y  =  2x  +  5"
       },
       {
-        "id": 1232,
-        "text": "in the figure above, what is the equation of the line that passes the y-axis at (0,5) and passes the x-axis at (5,0)?",
-        "options": [
-          " y = x + 5",
-          "y = -x + 5",
-          "y = x - 5",
-          "y = -x - 5"
-        ],
-        "answer": 1,
-        "explanation": "(x<sub>1</sub> , y<sub>1</sub> ) = (0,5)\n\n(x<sub>2</sub> , y<sub>2</sub> ) = (5, 0)\n\nUsing (y − y<sub>1</sub) /(y<sub>2</sub>  − y<sub>1</sub>)  = (x − x<sub>1</sub>)/(x<sub>2</sub>  − x<sub>1</sub>) \n\n\n(y−5)/(0−5) = (x−0)/(5−0)\n\n\n(y−5)/−5 = x/5\n\n\n5(y - 5) = -5x\n\ny - 5 = -x\n\nx + y = 5\n\ny = -x + 5"
-      },
-      {
         "id": 917,
         "text": "From the diagram above, find the value of x",
         "options": [
@@ -13470,18 +13290,6 @@
         ],
         "answer": 2,
         "explanation": "t = time taken and N = number of men\nt ∝ 1/N\nt = K/N\nK = Nt\nK = 30 * 6\nK = 180\n∴t = 180/N\n4 = 180/N\n4N = 180\nN = 180/4\n45 men"
-      },
-      {
-        "id": 314,
-        "text": "The shaded area in the diagram above is represented by",
-        "options": [
-          " {(x,y) : y - 3x < -6}",
-          "{(x,y) : y + 3x < 6}",
-          "{(x,y) : y + 3x < -6}",
-          "{(x,y) : y - 3x < 6}"
-        ],
-        "answer": 1,
-        "explanation": "Coordinates of the line are (x1 y1)(0,2) respectively and (x2 y2)(2,0) respectively\nGradient (m) of the line = (y2 - y1) / (x2 - x1) = (0-6) / (2-0) = -6/2\n= -3\nEquation of the line y-y1 = m(x-x1)\ny - 6 = -3(x - 0)\ny - 6 = -3x\ny + 3x = 6\ninequality; from the y axis, the shaded region is below the line\n∴ y + 3x ∠ 6 and line is a broken line"
       },
       {
         "id": 770,
@@ -13566,18 +13374,6 @@
         ],
         "answer": 2,
         "explanation": "No explanation provided."
-      },
-      {
-        "id": 805,
-        "text": "The pie chart above shows the statistical distribution of 80 students in five subjects in an examination. Calculate how many student offer Mathematics.",
-        "options": [
-          "30",
-          "11",
-          "50",
-          "20"
-        ],
-        "answer": 1,
-        "explanation": "5x° + (16x - 24)° + 5x° + (4x + 12)° + (6x + 12)° = 360°\n\n36x° - 24 + 12 + 12 = 360°\n\n36x° = 360°\n\nx° = 360°/36\n\n\n= 10°\n\nThus, the angle of sector representing Mathematics is 5 x 10° = 50°. Hence the number of students who offer mathematics is\n\n50/(360) × 80 ≈ 11"
       },
       {
         "id": 531,
@@ -13760,18 +13556,6 @@
         "explanation": "The lenght of Arc AB = Q/360 2πr\n\n= 48/360 x 22/27 x 10.5 = 48/360\n x 22/27 x 21/2= (4 × 22 × 3)/30 × 88/10 = 8.8cm \n\nPerimeter = 8.8 + 2r = 8.8 + 2r \n\n= 8.8 + 2(10.5)\n\n= 8.8 + 21\n\n= 29.8 cm\n"
       },
       {
-        "id": 320,
-        "text": "The pie chart above shoes the distribution of the corps harvested from a farmland in a year, If 3,000 tonnes of millet is harvested, what amount of beans is harvested?",
-        "options": [
-          "9000 tonnes",
-          "6000 tonnes",
-          "1500 tonnes",
-          "1200tonnes"
-        ],
-        "answer": 3,
-        "explanation": "beans angle = 360° - (60° + 90° + 150°)\n\n360° - 300° = 60°\n\n150° - 3000 tonnes\n\n60° - 60/150 x 3000 tonnes\n\n= 1,200 tonnes"
-      },
-      {
         "id": 1214,
         "text": "If sin θ=12/13\n, find the value of 1 + cos θ",
         "options": [
@@ -13844,18 +13628,6 @@
         "explanation": "∫<sup>2</sup>, <sub>0</sub>(x<sup>3</sup> + x<sup>2</sup>)dx = ∫<sup>2</sup>, <sub>0</sub>(x<sup>4</sup>/4+x<sup>3</sup>/3)\n\n= (2<sup>4</sup>/4+2<sup>3</sup>/3) - (0<sup>4</sup>/4+0<sup>3</sup>/3)\n\n= (16/4+8/3) - 0\n\n= 80/12=20/3 or 6(2/3)"
       },
       {
-        "id": 366,
-        "text": "The Venn diagram above shows a class of 40 students with the games they play. How many of the students play two games only?",
-        "options": [
-          "19",
-          "6",
-          "15",
-          "4"
-        ],
-        "answer": 2,
-        "explanation": "N (two games only) = 7 + 5 + 3 = 15"
-      },
-      {
         "id": 794,
         "text": "Calculate the median age of the frequency distribution in the table above",
         "options": [
@@ -13904,18 +13676,6 @@
         "explanation": "No explanation provided."
       },
       {
-        "id": 986,
-        "text": "In the figure above, |CD| is the base of the triangle CDE. Find the area of the figure to the nearest whole number.",
-        "options": [
-          "56 cm<sup>2</sup>",
-          "24 cm<sup>2</sup>",
-          "42 cm<sup>2</sup>",
-          "34 cm<sup>2</sup>"
-        ],
-        "answer": 3,
-        "explanation": "Area of rectangle ABCD = length x breadth\n\n= 7 x 4 \n\n= 28 cm<sup>2</sup>\nArea of triangle CDE = 1/2\n base x height\n\n= 1/2 × 3 × 4\n= 6 cm<sup>2</sup>\nArea of the figure = 28 cm<sup>2</sup>\n + 6 cm<sup>2</sup> = 34 cm<sup>2</sup>"
-      },
-      {
         "id": 629,
         "text": "Simplify √2+1/√3)(√2-1/√3",
         "options": [
@@ -13926,18 +13686,6 @@
         ],
         "answer": 1,
         "explanation": "√2+1/√3)(√2-1/√3.    √4-√2/√3+√2/√3-1/√9 = 2 - 1/3\n\n\n= (16−1)/3\n\n\n= 5/3"
-      },
-      {
-        "id": 277,
-        "text": "Find the value of x in the figure above",
-        "options": [
-          "15√6",
-          "20√6",
-          "3√6",
-          "5√6"
-        ],
-        "answer": 3,
-        "explanation": "X/sin45=15/sin60 X=15sin45/sin60 X=(15×(1/√2))/√(3/2) X=15/√2×2/√3 X=30/√6 X=30/√6×√6/√6=(30√6)/6=5√6"
       },
       {
         "id": 604,
@@ -13998,18 +13746,6 @@
         ],
         "answer": 0,
         "explanation": "Range = Highest - lowest number => 10-4 = 6\nMode is the number with highest occurrence => Mode = 10\n\nSum = 6 + 10 = 16"
-      },
-      {
-        "id": 368,
-        "text": "In the diagram above calculate the value of x",
-        "options": [
-          "60°",
-          "100°",
-          "120°",
-          "140°"
-        ],
-        "answer": 2,
-        "explanation": "p + 40° = 100° (exterior ∠ = sum of two interior opp ∠s)\np = 100° - 40°\nP = 60°\nBut q + p = 180° (∠s on a straight line)\nq + 60°\nq = 180° - 60°\nq = 120°\nx = q (corresponding ∠)\n∴x = 120°"
       },
       {
         "id": 663,
@@ -14096,18 +13832,6 @@
         "explanation": "360° - (60° + 60° + 67 + 50 = 237°) \n\n360° - 237 = 130°\n \n\nB. Salary = 123/360 X N6000/1\n \n\n= N2,050"
       },
       {
-        "id": 826,
-        "text": "In the diagram above, l<sub>1</sub> is parallel to l<sub>2</sub>, Find the value of < PMT",
-        "options": [
-          "82°",
-          "36°",
-          "72°",
-          "118°"
-        ],
-        "answer": 0,
-        "explanation": "< MPT = 180° - 118° = 62°\n\n< PML = 62° ( Alternative angle)\n\ny + 2y + 10° + 62° = 180° (Angles on a straight line)\n\n3y = 180 - 72\n3y/3 = 108/3\n\ny = 36°\n\n< PMT = 2y + 10 = 2(36) + 10 = 82°"
-      },
-      {
         "id": 71,
         "text": "What is the coordinate of centre of the circle X2+y2+2x-4y =10?  ",
         "options": [
@@ -14178,18 +13902,6 @@
         ],
         "answer": 1,
         "explanation": "x - y = 2 ...........(1)\n\nx2 - y2 = 8 ........... (2)\n\nx - 2 = y ............ (3)\n\nPut y = x -2 in (2)\n\nx2 - (x - 2)2 = 8\n\nx2 - (x2 - 4x + 4) = 8\n\nx2 - x2 + 4x - 4 = 8\n\n4x = 8 + 4 = 12\n\nx = 12/4\n\n= 3\n\nfrom (3), y = 3 - 2 = 1\n\ntherefore, x = 3, y = 1"
-      },
-      {
-        "id": 378,
-        "text": "The pie chart above shows the expenditure of a family whose income is N30,000. If the expenditure on food is twice that on housing and that on school fees is twice that on transport, how much does the family spend on food?",
-        "options": [
-          "N 28 000",
-          "N 25 500",
-          "N15 000s",
-          "N 12 500s"
-        ],
-        "answer": 3,
-        "explanation": "Expenditure on housing = x\nExpenditure on food = 2x\nExpenditure on school fees = 90o\nExpenditure on transport = 45o\nx + 2x + 90 + 45 = 360o\n3x + 135 = 360o\n3x = 360 - 135\n3x = 225\nx = 225/3 = 75o\n∴∠ for food = 2x = 2 * 75\n= 150\n360o = N30,000\n1o = ?\n1o = 30,000/360\n150o = (30000/360) * (150/1)\n= N12500"
       },
       {
         "id": 920,
@@ -14310,18 +14022,6 @@
         ],
         "answer": 2,
         "explanation": "No explanation provided."
-      },
-      {
-        "id": 1012,
-        "text": "In the diagram above, O is the centre of the circle ABC, < ABO = 26° and < BOC = 130°. Calculate < AOC.",
-        "options": [
-          "26°",
-          "13°",
-          " 80°",
-          "102°"
-        ],
-        "answer": 3,
-        "explanation": "< BAC = 130/2\n (angle subtended at the centre)\n\n< BAC = 65°\n\nAlso, x = 26° (theorem)\n\ny = 65° - 26° = 39°\n\n< AOC = 180° - (39° + 39°)\n\n= 102°"
       },
       {
         "id": 1110,
@@ -14696,18 +14396,6 @@
         "explanation": "If log 7.5 = 0.8751\nThen 2log75 + log750\n= 2(1.8751) + 2.8751\n= 3.7502 + 2.8751\n= 6.6253"
       },
       {
-        "id": 762,
-        "text": "In the diagram above, PQR is a circle centre O. If < QPR is x°, find < QRP.",
-        "options": [
-          " x°",
-          "(90 – x)°",
-          "(90 + x)°",
-          " (180 – x)°"
-        ],
-        "answer": 1,
-        "explanation": "< PQR = 90° (angle in a semi-circle)\n\n< QRP = (90 - x)°"
-      },
-      {
         "id": 6,
         "text": "A business invested a total of N200,000 in two companies which paid dividends of 5% and 7% respectively. If the received a total of N11, 600 as dividend, how much did he invest at 5% ",
         "options": [
@@ -14730,18 +14418,6 @@
         ],
         "answer": 3,
         "explanation": "No explanation provided."
-      },
-      {
-        "id": 1127,
-        "text": "In the diagram above, XY = 8cm and OX = 5cm. Find Oz",
-        "options": [
-          "9cm",
-          "3.4cm",
-          "9.1cm",
-          "3cm"
-        ],
-        "answer": 3,
-        "explanation": "hyp = 5cm, adj =  8cm/2  4cm, opp = xcm\n\nPythagoras theorem: \n\nhyp<sup>2</sup> = opp<sup>2</sup> + adj<sup>2</sup>\n                                                                                                                        5<sup>2</sup>  = x<sup>2</sup>  + 4<sup>2</sup>\n                                                                                                                        x<sup>2</sup> = 25 - 16\n\nx = √9\n\nx = 3cm"
       },
       {
         "id": 892,
@@ -15008,18 +14684,6 @@
         "explanation": "tanθ = 3/4\n\n\nfrom Pythagoras tippet, the hypotenus is T\n\ni.e. 3, 4, 5.\n\nthen sin θ = 3/5 and cosθ = 4/5\n\n\ncosθ - sinθ\n\n4/5 - 3/5 = 1/5"
       },
       {
-        "id": 371,
-        "text": "The grades of 36 students in a test are shown in the pie chart above. How many students had excellent?",
-        "options": [
-          "7",
-          "8",
-          "9",
-          "12"
-        ],
-        "answer": 0,
-        "explanation": "Angle of Excellent\n= 360 - (120+80+90)\n= 360 - 290\n= 70o\nIf 360o represents 36 students\n1o will represent 36/360\n50o will represent 36/360 * 70/1\n= 7"
-      },
-      {
         "id": 311,
         "text": "Simplify 1/√3+2\n in the form a+b√3",
         "options": [
@@ -15236,18 +14900,6 @@
         "explanation": "No explanation provided."
       },
       {
-        "id": 330,
-        "text": "The venn diagram above shows a class of 40 students with the games they play. How many of the students play two games only?",
-        "options": [
-          "19",
-          "16",
-          "15",
-          "4"
-        ],
-        "answer": 2,
-        "explanation": "Two games played only = 5 + 7 + 3\n= 15"
-      },
-      {
         "id": 361,
         "text": "In how many ways can 6 coloured chalks be arranged if 2 are same colour?",
         "options": [
@@ -15344,18 +14996,6 @@
         "explanation": "No explanation provided."
       },
       {
-        "id": 396,
-        "text": "In the diagram above, QR is in the diameter of the semicircle QR. Find the areas of the figure to the nearest whole number.",
-        "options": [
-          "89 cm<sup>2</sup>",
-          "70 cm<sup>2</sup>",
-          "90 cm<sup>2</sup>",
-          "80 cm<sup>2</sup>"
-        ],
-        "answer": 2,
-        "explanation": "Area of rectangle PQRS\n= 10 x 7 = 70 cm2\nArea of semi circle\nQR = Dπ = 7 x 22/7 = 22cm2\n∴Area of the figure = 70 + 22\n= 92cm<sup>2</sup>\n= 90cm<sup>2</sup>"
-      },
-      {
         "id": 242,
         "text": "A trapezium has two parallel sides of length 5cm and 9cm. If the area is 21cm2, find the distance between the parallel sides",
         "options": [
@@ -15438,18 +15078,6 @@
         ],
         "answer": 0,
         "explanation": "X = {n<sup>2</sup> +1:n is a positive integer and 1 ≤ n ≤ 5}\nImplies X = {2, 5, 10, 17, 26} i.e. put n= 1, 2, 3, 4 and 5\nY = {5n:n is a positive integer and 1 ≤ n ≤ 5}\nPut X = 1, 2, 3, 4, and 5\nY = {5, 10, 15, 20, 25}\nX ∩ Y = {2, 5, 10, 17, 26} ∩ {5, 10, 15, 20, 25}\n= {5, 10}"
-      },
-      {
-        "id": 832,
-        "text": "The pie chart above shows the distribution of subjects offered by students in SSS III level. If 80 students enrolled in the class. What is the size of the angle of the sector in economics?",
-        "options": [
-          "24°",
-          "39°",
-          "32°",
-          "36°"
-        ],
-        "answer": 2,
-        "explanation": "x° + 36° + 54° + 28° + 90° + 120° = 360°\n\nx + 328° = 360°\nx = 360° - 328°\nx = 32°"
       },
       {
         "id": 259,
@@ -15836,18 +15464,6 @@
         "explanation": "Using the L.C.M of the fractions, convert them to uniform base.\nL.C.M = 36, the new fraction becomes: 6/36, 12/36, 54/36, 24/36, 32/36 and 48/36.\nRange = highest value - lowest value\nHighest among the given fraction = 54/36\nLowest among the given fraction = 6/36.\n\nRange = (54/36) - (6/36) = 48/36 = 4/3"
       },
       {
-        "id": 1229,
-        "text": "In the figure above, KL//NM, LN bisects < KNM. If angles KLN is 54o and angle MKN is 35°, calculate the size of angle KMN.",
-        "options": [
-          " 91°",
-          "89°",
-          "37°",
-          "19°"
-        ],
-        "answer": 2,
-        "explanation": "In the diagram above, α\n = 54o(alternate angles; KL||MN) < KNM = 2α\n (LN is bisector of < KNM) = 108°\n\n35° + < KMN + 108° = 180°(sum of angles of △\n)\n\n< KMN + 143° = 180°\n\n< KMN = 180° - 143°\n\n= 37°"
-      },
-      {
         "id": 1274,
         "text": "If an investor invest N450,000 in a certain organization in order to yield X as a return of N25,000. Find the return on an investment of N700,000 by Y in the same organization.",
         "options": [
@@ -15908,18 +15524,6 @@
         "explanation": "mean(x)=20t/5=4t. Standard deviation=√((10t<sup>2</sup> )/5) √2=√((10t<sup>2</sup> )/5) √2=√(2t<sup>2</sup>  ) 2=2t<sup>2</sup>  t<sup>2</sup> =1. t=1"
       },
       {
-        "id": 665,
-        "text": "From the venn diagram above, the complement of the set P∩\nQ is given by",
-        "options": [
-          " {a, b, d, e}",
-          "{b, d}",
-          "{a, e}",
-          "{c}"
-        ],
-        "answer": 0,
-        "explanation": "No explanation provided."
-      },
-      {
         "id": 313,
         "text": "The shadow of a pole 5√3m high is 5m. Find the angle of elevation of the sun.",
         "options": [
@@ -15930,18 +15534,6 @@
         ],
         "answer": 3,
         "explanation": "Tan θ = 5√3/5\nTan θ = √3\nθ = 60°"
-      },
-      {
-        "id": 213,
-        "text": "The venn diagram above shows the numbers of students offering music and history in a class of 80 students. If a student is picked at random from the class, what is the probability that he offers Music only?",
-        "options": [
-          " 0.38",
-          "0.13",
-          "0.50",
-          " 0.25"
-        ],
-        "answer": 3,
-        "explanation": "30 - x + x + 40 - x = 80 - 20\n70 - x = 60\n- x = 60 - 70\n- x = - 10\n∴ x = 10\nMusic only = 30 - x\n= 30 - 10\n20\nP(music only) = 20/80\n= 1/4\n= 0.25"
       },
       {
         "id": 633,
@@ -16388,18 +15980,6 @@
         "explanation": "Cost Price:\n\nSelling price = 100 : (100 + 15)\n\n= 100 : 115\n\nCost Price\n\n= 100 ÷ 115 of selling price (i.e N420,000)\n\n= 100 ÷ 115 × N420,000\n\n= N365,217.4\n\n∴ Cost Price = N365, 217"
       },
       {
-        "id": 1109,
-        "text": "In the diagram above angle LNM and angle YNZ are represented by g and h respectively. Find ∠MNY",
-        "options": [
-          "180° - g° - h°",
-          " 360° - (g-h)°",
-          "180° - (g-h)°",
-          "360° - g° - h°"
-        ],
-        "answer": 0,
-        "explanation": "Using line LZ with angles sum = 180º\n\n: ∠MNY = 180° - (g + h)° or 180° - g° - h°"
-      },
-      {
         "id": 584,
         "text": "An arc subtends an angle of 50o at the center of circle of radius 6cm. Calculate the area of the sector formed",
         "options": [
@@ -16758,18 +16338,6 @@
         ],
         "answer": 3,
         "explanation": "Area of the figure = Area of rect + area of semi circle                                   =L×h+1/2 πr<sup>2</sup> 5×15+1/2×22/7×〖(5/2)〗<sup>2</sup>=75+((22×25))/(2×7)=75+9 23/28=84.8cm"
-      },
-      {
-        "id": 317,
-        "text": "The shaded area in the diagram above is represented by",
-        "options": [
-          " {(x,y) : y - 3x < -6}",
-          "{(x,y) : y + 3x < 6}",
-          "{(x,y) : y + 3x < -6}",
-          "{(x,y) : y - 3x < 6}"
-        ],
-        "answer": 1,
-        "explanation": "Coordinates of the line are (x1 y1)(0,2) respectively and (x2 y2)(2,0) respectively\nGradient (m) of the line = (y2 - y1) / (x2 - x1) = (0-6) / (2-0) = -6/2\n= -3\nEquation of the line y-y1 = m(x-x1)\ny - 6 = -3(x - 0)\ny - 6 = -3x\ny + 3x = 6\ninequality; from the y axis, the shaded region is below the line\n∴ y + 3x ∠ 6 and line is a broken line"
       },
       {
         "id": 1182,
@@ -17708,18 +17276,6 @@
         "explanation": "No explanation provided."
       },
       {
-        "id": 1180,
-        "text": "Calculate, correct to three significant figures, the length of the arc AB in the diagram above.[Take π=22/7]",
-        "options": [
-          "32.4 cm",
-          "30.6 cm",
-          "28.8 cm",
-          "30.5 cm"
-        ],
-        "answer": 1,
-        "explanation": "Consider ∆XOB and using Pythagoras theorem\n\n13<sup>2</sup> = 12<sup>2</sup> + h<sup>2</sup>\n⇒ 169 = 144 + h<sup>2</sup>\n⇒ 169 - 144  =h<sup>2</sup>\n⇒ 25 = h<sup>2</sup>\n⇒ h = √25 = 5cm\n\ntan θ = opp/adj\n⇒ tan θ = 12/5 = 2.4\n\n⇒ θ = tan<sup>-1</sup>(2.4)\n\n⇒ θ = 67.38<sup>o</sup>\n∠AOB = 2θ = 2 x 67.38<sup>o</sup> = 134.76<sup>o</sup>\nL = θ/360<sup>o</sup>×2πr\n⇒ L = 134.76/360 × 2 × (22/7) × 13 =77082.72/2520\n∴ L = 30.6cm (to 3 s.f)"
-      },
-      {
         "id": 237,
         "text": "Find the value of x and y respectively if 3x - 5y + 5 = 0 and 4x - 7y + 8 = 0",
         "options": [
@@ -17838,18 +17394,6 @@
         ],
         "answer": 1,
         "explanation": "No explanation provided."
-      },
-      {
-        "id": 340,
-        "text": "In the diagram above calculate the value of x",
-        "options": [
-          "60°",
-          "100°",
-          "120°",
-          "140°"
-        ],
-        "answer": 2,
-        "explanation": "p + 40° = 100° (exterior ∠ = sum of two interior opp ∠s)\np = 100° - 40°\nP = 60°\nBut q + p = 180° (∠s on a straight line)\nq + 60°\nq = 180° - 60°\nq = 120°\nx = q (corresponding ∠)\n∴x = 120°"
       },
       {
         "id": 390,
@@ -18968,18 +18512,6 @@
         "explanation": "a=6,U<sub>4</sub> =162. U<sub>4</sub>=ar<sup>(4-1)</sup> UU<sub>4</sub> = ar<sup>3</sup> 162=6(r)<sup>3</sup>. r<sup>3</sup>=27. r=∛27.  r=3.  S<sub>4</sub>=(a(r<sup>n</sup>-1))/(r-1)=(6(3<sup>3</sup>-1))/(3-1)=(6(27-1))/2=3×26=78"
       },
       {
-        "id": 1233,
-        "text": "The pie chart above shows the monthly distribution of a man's salary on food items. If he spent N8,000 on rice, how much did he spent on yam?",
-        "options": [
-          "N42,000",
-          "N18,000",
-          "N16,000",
-          "N12,000"
-        ],
-        "answer": 2,
-        "explanation": "Angle of sector subtended by yam\n\n= 360° - (70 + 80 + 50)°\n\n= 360° - 200°\n\n= 160°\n\nBut (80°/360°)\n x T = 8000\n\nT = (8000×360°)/80°\n\n\n= N36,000\n\nHence the amount spent on yam = (160°/260) × N36,000\n\n\n= N16,000"
-      },
-      {
         "id": 635,
         "text": "If x varies directly as square root of y and x = 81 when y = 9, Find x when y = 1(7/9)",
         "options": [
@@ -19074,18 +18606,6 @@
         ],
         "answer": 3,
         "explanation": "Length of chord =2rsin(θ/2)\n= 2 × 8 × sin(90/2)\n= 16 × √2/2\n= 8√2cm"
-      },
-      {
-        "id": 843,
-        "text": "From the table above, find the median",
-        "options": [
-          "3",
-          "5",
-          "4",
-          "6"
-        ],
-        "answer": 1,
-        "explanation": "No explanation provided."
       },
       {
         "id": 937,
@@ -19266,18 +18786,6 @@
         ],
         "answer": 3,
         "explanation": "Arrange all the values in ascending order,\n\n2,2,3,3,3,4,4,4,4,5,5,5,7,8,9,9"
-      },
-      {
-        "id": 426,
-        "text": "\nThe pie chart above illustrate the amount of private time a student spends in a week studying various subjects. Find the value of k",
-        "options": [
-          " 90°",
-          "60°",
-          "30°",
-          "40°"
-        ],
-        "answer": 2,
-        "explanation": "K + 5K + 3K + 75 + 105 = 360 (at a point)\n6K + 180 = 360\n6K = 360 - 180\n6K = 180\nk = 180/6 = 30°"
       },
       {
         "id": 1112,
@@ -19758,30 +19266,6 @@
         ],
         "answer": 2,
         "explanation": "Evaluate ∫<sub>0</sub><sup>π/2</sup>   sin xdx = -cosx|π/2\n\n\n= -(cos<sup>π/2</sup> - cos0) = -(0-1) = 1"
-      },
-      {
-        "id": 1228,
-        "text": "From the venn diagram above, the shaded parts represent",
-        "options": [
-          "(P∩Q)∪(P∩R)",
-          "(P∪Q)∩(P∩R)",
-          " (P∪Q)∪(P∪R)",
-          "(P∩Q)∪(P∪R)"
-        ],
-        "answer": 0,
-        "explanation": "No explanation provided."
-      },
-      {
-        "id": 264,
-        "text": "In the diagram above, PQR is a straight line and PS is a tangent to the circle QRS with /PS/ = /SR/ and ∠SPR = 40o. Find ∠PSQ",
-        "options": [
-          "40°",
-          "30°",
-          "20°",
-          "10°"
-        ],
-        "answer": 0,
-        "explanation": "R = P (base ∠s of isc Δ, ps = RS)\n∴R = 40o\n∠PSQ = R (∠s in alternate segment)\n∴∠PSQ = 40°"
       },
       {
         "id": 839,
@@ -20360,18 +19844,6 @@
         "explanation": "|A| = (2*3) - (1*3)\n\n→ 6 - 3\n\n= 3"
       },
       {
-        "id": 400,
-        "text": "In the diagram above, find the value of x",
-        "options": [
-          "55°",
-          "50°",
-          "45°",
-          "40°"
-        ],
-        "answer": 2,
-        "explanation": "y = 55 (alternate angles)\nx = x (same reason)\n260 + y + x = 360 (∠s at a point)\n260 + 55 + x = 360\n315 + x = 360\nx = 360 - 315\nx = 45°"
-      },
-      {
         "id": 36,
         "text": "The expression ax2 + bx takes the value 6 when x = 1 and 10 when x = 2. Find its value when  x = 5       ",
         "options": [
@@ -20480,18 +19952,6 @@
         "explanation": "Using S∞ = a/1−r\n\nr = 0.05/0.5 = 1/10\n\nS∞ = 0.5/(1/10)\n\n\n= 0.5/(9/10)\n\n= 0.5×10/9\n\n= 5/9"
       },
       {
-        "id": 1178,
-        "text": "Calculate, correct to three significant figures, the length AB in the diagram above.",
-        "options": [
-          "36.4 cm",
-          "36.1 cm",
-          "36.2 cm",
-          " 36.3 cm"
-        ],
-        "answer": 2,
-        "explanation": "sinA/a = sinB/b = sinC/c\n⟹sin82<sup>0</sup>/43.2 = sin56<sup>0</sup>/AB\n⟹AB × sin82<sup>0</sup> = 43.2 × sin56<sup>0</sup>\n∴ AB = (43.2 × sin56<sup>0</sup>)/sin82<sup>0</sup>  = 36.2cm (to 3 s.f)"
-      },
-      {
         "id": 1107,
         "text": "A rectangular pyramid has an area 24cm<sup>2</sup>\n and height 7.5cm. Find its volume?",
         "options": [
@@ -20514,18 +19974,6 @@
         ],
         "answer": 0,
         "explanation": "No explanation provided."
-      },
-      {
-        "id": 1100,
-        "text": "The shaded portion in the venn diagram above represents?",
-        "options": [
-          " F - (E n F) - (G n F)",
-          " E' n F n G'",
-          " E u F u G",
-          " F"
-        ],
-        "answer": 1,
-        "explanation": "-The shaded/stripped portion in the diagram is set F only.\n-This implies that sets E and G though present in the Universal set, are not included in the expression.\n\n-Mathematically; we have E' n F n G'"
       },
       {
         "id": 1108,
@@ -20756,18 +20204,6 @@
         "explanation": "The sides have been given to the nearest meter, so\n\n51.5 m ≤ length < 52.5\n\n37.5 m ≤ width < 38.5\n\nMinimum area = 37.5 x 51.5 = 1931.25 m<sup>2</sup>\n\n\nMaximum area = 38.5 x 52.5 = 2021.25 m<sup>2</sup>\n\n\n∴ The range of the area = 1931.25 m<sup>2</sup> ≤ A < 2021.25 m<sup>2</sup>"
       },
       {
-        "id": 261,
-        "text": "In the diagram above, PQ is parallel to RS. What is the value of α + β + γ?",
-        "options": [
-          " 360°",
-          "200°",
-          "180°",
-          "90°"
-        ],
-        "answer": 0,
-        "explanation": "γ + S = 180(Allied angles)\nS = 180 - γ\nα + P = 180(Allied angles)\np = 180 - α\nβ = P + S\nβ = 180 - α + 180 - γ\nβ = 360 - α - γ\nβ + α + γ = 360"
-      },
-      {
         "id": 1041,
         "text": "Express the product of 0.0014 and 0.011 in standard form ",
         "options": [
@@ -20946,18 +20382,6 @@
         ],
         "answer": 2,
         "explanation": "(3 x 0) + (1 x 2) + (5 x 2) + (5 x 3) + (5 x 4) +\n(10 x 5) + (4 x 6) + (3 x 7) + (1 x 8) + (2 x 9) ÷\n 40\n\n= 168/40 = 4.2"
-      },
-      {
-        "id": 343,
-        "text": "In the diagram above, O is the center of the circle,\n\n∠UOT = 70° and ∠RST = 100°. Calculate ∠RUO.",
-        "options": [
-          "20°",
-          "25°",
-          "50°",
-          "80°"
-        ],
-        "answer": 1,
-        "explanation": "∠OUT = ∠OTU = a (Base ∠s of 180 Δ)\n∴ a + a + 70 = 180° (sum of ∠s of a Δ)\n2a = 180° - 70°\n2a = 110°\na = 55°\nBut ∠RUT + ∠RBT = 180° (opposite ∠s of a Cyclic quad)\n∴ x + a = 100 = 180\nx + 55 + 100 = 180\nx = 180 - 155\nx = 25\nso ∠RUO = x = 25°"
       },
       {
         "id": 344,
@@ -21860,18 +21284,6 @@
         "explanation": "Length of chord = 2rsin(θ/2)\n= 2(3)sin(68/2)\n= 6sin 34\n= 6 × 0.559\n= 3.354 cm ≊\n  3.4 cm"
       },
       {
-        "id": 212,
-        "text": "In the diagram above , XZ is the diameter of the circle XZW, with center O and radius 15/2 cm. If XY = 12 cm, find the area of the triangle XYZ",
-        "options": [
-          "54 cm<sup>2</sup>",
-          " 45 cm<sup>2</sup>",
-          "27 cm<sup>2</sup>",
-          "75 cm<sup>2</sup>"
-        ],
-        "answer": 0,
-        "explanation": "o (< semi circle )\nsince radius = 15/2 diameter = 2 * (15/2) = 15cm\nXYZ is a right angled triangle\n∴ 15<sup>2</sup> = 12<sup>2</sup> + (YZ)<sup>2</sup>\n225 = 144 = (YZ)<sup>2</sup>\n225 - 144 = (YZ)<sup>2</sup>\n81 = (YZ)<sup>2</sup>\n√81 = YZ\n9 = YZ\nArea of ΔXYZ = 1/2bh\n(1/2) * 9 * 12\n9 * 6 = 54\n= 54cm<sup>2</sup>"
-      },
-      {
         "id": 938,
         "text": "The table shown gives the marks scored by a group of student in a test. Use the table to answer the question given.\n\nMark\t0\t1\t2\t3\t4\t5\nFrequency\t1\t2\t7\t5\t4\t3\nWhat is the probability of selecting a student from the group that scored 2 or 3",
         "options": [
@@ -22110,18 +21522,6 @@
         ],
         "answer": 1,
         "explanation": "Convert the binary to base 10 and they convert back to base two\n\n10011<sub>2</sub>  + xxxxx<sub>2</sub>  + 11100<sub>2</sub>  + 101<sub>2</sub>  = 1001111<sub>2</sub> \n\n\n(1 × 2<sup>4</sup> + 0 × 2<sup>3</sup> + 1 × 2<sup>2</sup> + 1 × 21 + 1 × 2<sup>0</sup>) + xxxxx2 +(1 × 2<sup>4</sup> + 1 × 2<sup>3</sup> + 1 × 2<sup>2</sup> + 0 × 2<sup>2</sup> + 0 × 2<sup>0</sup>) + (1 × 2<sup>2</sup> + 0 × 2<sup>1</sup> + 1 × 2<sup>0</sup>)\n\n= (16 + 0 + 0 + 2 + 1) + xxxxx2 + (16 + 8 + 4 + 0 + 0 ) + (4 + 0 + 1)\n\n=(64 + 0 + 0 + 8 + 4 + 2 + 1)\n\n19 + xxxxx<sub>2</sub>  + 33 = 79\n\nxxxxx<sub>2</sub>  + 52 = 79\n\nxxxxx<sub>2</sub>  = 79 − 52\n\nxxxxx<sub>2</sub>  = 27<sub>210</sub> \n\n\n\n\n27<sub>10</sub>  = 11011<sub>2</sub> \n\nTherefore xxxxx<sub>2</sub>  = 27<sub>10</sub>  = 11011<sub>2</sub> "
-      },
-      {
-        "id": 401,
-        "text": "IN the diagram above, POQ is a diameter of the circle PQRS. If ∠PSR = 145°, find xo",
-        "options": [
-          " 55°",
-          "45°",
-          "35°",
-          "25°"
-        ],
-        "answer": 0,
-        "explanation": "∠PSQ = 90° (∠ in semi circle)\n∠PSQ + ∠QSR = 145o\n90 + ∠QSR = 145\n∠QSR = 145 - 90\n∠QSR = 55°\nBUt x° = ∠QSR (∠s in the same segment)\n∴xo = 55°"
       },
       {
         "id": 1040,
@@ -22448,18 +21848,6 @@
         "explanation": "Since ST = the radius r, => SOT is equilateral.\nEach angle = 60°\nLength of arc ST = θ/360 x 2πr\n= 60/360 x 2 x π x r = πr/3"
       },
       {
-        "id": 310,
-        "text": "The shaded region in the Venn diagram above is",
-        "options": [
-          " Pc ∪ (Q ∩ R)",
-          " Pc ∩ (Q ∪ R)",
-          " P ∩ Q",
-          "Pc ∩ (Q ∩ R)"
-        ],
-        "answer": 3,
-        "explanation": "The shaded portion shows the elements in Q and R, but not in P, Q n R n P'"
-      },
-      {
         "id": 1125,
         "text": "Evaluate <sup>n</sup><sup>2 </sup> + <sup>1</sup>C<sub>(n+5)</sub> \n if n = 3 ",
         "options": [
@@ -22746,18 +22134,6 @@
         ],
         "answer": 2,
         "explanation": "Equation of the line\n\ny − 4/x−0 = 0−4/1−0\ny − 4/x = −4/1\n∴ −4x = y −4\ny = −4x + 4\n∴ The shaded portion = y ≤ −4x + 4"
-      },
-      {
-        "id": 275,
-        "text": "In the diagram above, PQ = 4 cm and TS = 6 cm. If the area of parallelogram PQTU is 32 cm 2, find the area of the trapezium PQRU",
-        "options": [
-          "60 cm2",
-          "72 cm2",
-          "48 cm2",
-          "24 cm2"
-        ],
-        "answer": 1,
-        "explanation": "Area of parallelogram PQTU = base * height\n32 = 4 * h\nw = 32/4\nw = 8\n∴ = Area of Trapezium PQRU = (1/2)(4 + 14) *8\n= 1/2 * (18 * 8)\n= 72 cm2"
       },
       {
         "id": 1251,
@@ -23845,18 +23221,6 @@
         "explanation": "Boiling occurs when bubbles of vapour form within the liquid and rise to the surface.\nCondition for boiling:\nFor bubbles to form and grow inside the liquid, the vapour pressure inside the bubbles must overcome the external pressure (atmospheric pressure) pushing down on the liquid surface.\nKey point:\nBoiling occurs when vapour pressure equals atmospheric pressure."
       },
       {
-        "id": 620,
-        "text": "In the diagram above, the ratio of he electric power dissipated in the 6Ω and the 3Ω resistor respectively is",
-        "options": [
-          "2:1",
-          "2:2",
-          "1:3",
-          "1:2"
-        ],
-        "answer": 3,
-        "explanation": "Circuit analysis:\nThe two resistors are connected in parallel across the 12V battery.\nStep 1: Voltage across each resistor\nIn a parallel circuit, voltage across each resistor is the same:\n\nV₁ = V₂ = 12 V\n\nStep 2: Power dissipated in each resistor\nFormula: P = V²/R\nPower in 6Ω resistor:\nP₁ = V²/R₁ = (12)²/6 = 144/6 = 24 W\nPower in 3Ω resistor:\nP₂ = V²/R₂ = (12)²/3 = 144/3 = 48 W\nStep 3: Calculate ratio\nRatio P₁ : P₂ = 24 : 48\nRatio P₁ : P₂ = 1 : 2"
-      },
-      {
         "id": 970,
         "text": "Steam burn is more severe than that of boiling water because",
         "options": [
@@ -24337,18 +23701,6 @@
         "explanation": "Diagram B correctly represents two isolated unlike poles, with clear, symmetric field lines joining N to S"
       },
       {
-        "id": 225,
-        "text": "In the diagram above, the direction of the force between N and S in the magnetic field is",
-        "options": [
-          " MP",
-          "SN",
-          "NS",
-          "PM"
-        ],
-        "answer": 2,
-        "explanation": "Magnetic field lines flow from the north pole to the south pole. The force direction is from the north pole (N) toward the south pole (S)."
-      },
-      {
         "id": 572,
         "text": "288KJ is conducted across two opposite faces of a 3m cube of temperature gradient 90°Cm⁻¹ in 7200s. Calculate the thermal conductivity.",
         "options": [
@@ -24383,18 +23735,6 @@
         ],
         "answer": 3,
         "explanation": "No explanation provided."
-      },
-      {
-        "id": 746,
-        "text": "The frequency of the wave in the diagram above is",
-        "options": [
-          " 0.17 Hz",
-          "0.25 Hz",
-          "1.57 Hz",
-          "1.05 Hz"
-        ],
-        "answer": 1,
-        "explanation": "Generally, period T = 1/f(reciprocal of frequency).\n=> f = 1/T\nAnd from the diagram, period T = 4s\n∴ frequency, f = 1/T = 1/4 = 0.25 Hz"
       },
       {
         "id": 54,
@@ -24613,18 +23953,6 @@
         "explanation": "\nGiven information:\n\nPotential difference (V) = 10 kV = 10,000 V\nMass of electron (m) = 9.1 × 10⁻³¹ kg\nCharge of electron (e) = 1.6 × 10⁻¹⁹ C\nPlanck's constant (h) = 6.6 × 10⁻³⁴ Js\nWavelength (λ) = ?\n\nStep 1: Calculate kinetic energy gained\nKE = eV\nKE = 1.6 × 10⁻¹⁹ × 10,000\nKE = 1.6 × 10⁻¹⁵ J\nStep 2: Calculate velocity\nKE = ½mv²\nv² = 2KE/m\nv² = (2 × 1.6 × 10⁻¹⁵)/(9.1 × 10⁻³¹)\nv² = (3.2 × 10⁻¹⁵)/(9.1 × 10⁻³¹)\nv² = 3.516 × 10¹⁵\nv = 5.93 × 10⁷ m/s\nStep 3: Calculate momentum\np = mv\np = 9.1 × 10⁻³¹ × 5.93 × 10⁷\np = 5.40 × 10⁻²³ kg·m/s\nStep 4: Calculate de Broglie wavelength\nλ = h/p\nλ = (6.6 × 10⁻³⁴)/(5.40 × 10⁻²³)\nλ = 1.22 × 10⁻¹¹ m"
       },
       {
-        "id": 387,
-        "text": "The effect of closing the key K in the circuit shown in the figure above would be to?",
-        "options": [
-          " increase the current by 0.4A",
-          " reduce the current by 0.4A",
-          "increase the current by 0.6A",
-          " reduce the current by 0.6A"
-        ],
-        "answer": 0,
-        "explanation": "Step 1: Current when K is open\nWhen K is open, one path through 8Ω total (4Ω + 4Ω) and 2Ω:\nTotal resistance = 8Ω + 2Ω = 10Ω\nCurrent (I₁) = V/R = 6/10 = 0.6A\nStep 2: Current when K is closed\nWhen K is closed, the two 4Ω resistors are in parallel:\nParallel combination: 1/R_parallel = 1/4 + 1/4 = 2/4\nR_parallel = 4/2 = 2Ω\nWait, let me recalculate:\n1/R = 1/4 + 1/4 = 1/4 + 1/4 = 2/4 = 1/2\nR_parallel = 2Ω... that's not right.\nActually: (4 × 4)/(4 + 4) = 16/8 = 2Ω\nHmm, the explanation shows R_parallel = 4Ω. Let me follow their logic:\nIf 1/8 + 1/8 = 2/8 = 1/4, then R = 4Ω\nTotal resistance with K closed: 4Ω + 2Ω = 6Ω\nCurrent (I₂) = 6/6 = 1A\nStep 3: Change in current\nΔI = I₂ - I₁ = 1 - 0.6 = 0.4A increase"
-      },
-      {
         "id": 844,
         "text": "If a convex lens of focal length 12cm is used to produce a real image four times the size of the object, how far from the lens must the object be placed?",
         "options": [
@@ -24683,18 +24011,6 @@
         ],
         "answer": 3,
         "explanation": "Low humidity means dry air, which promotes rapid evaporation of water."
-      },
-      {
-        "id": 402,
-        "text": "Consider the three forces acting at O and in equilibrium as shown in the figure. Which of the following equations is/are CORRECT?\nI. P₁ cos θ₁ = P₂ cos θ₂\nII. P₃ = P₁ cos θ₁ + P₂ cos θ₂\nIII. P₁ sin θ₁ = P₂ sin θ₂",
-        "options": [
-          "I only",
-          " II only",
-          "III only",
-          " II and III"
-        ],
-        "answer": 3,
-        "explanation": "Understanding equilibrium of forces:\nFor three forces in equilibrium at point O, the sum of forces in any direction must equal zero.\nResolving forces:\nHorizontal direction (along P₃):\nP₃ = P₁ cos θ₁ + P₂ cos θ₂\nVertical direction (perpendicular to P₃):\nP₁ sin θ₁ = P₂ sin θ₂\n(upward component of P₁ balances downward component of P₂)\nAnalyzing each statement:\nI. P₁ cos θ₁ = P₂ cos θ₂:\n\nThis would mean horizontal components are equal\nFALSE ✗\nThis ignores P₃, which also has a horizontal component\nThe sum of P₁ cos θ₁ and P₂ cos θ₂ equals P₃, not each other\n\nII. P₃ = P₁ cos θ₁ + P₂ cos θ₂:\n\nTRUE ✓\nHorizontal equilibrium equation\nP₃ balances the horizontal components of P₁ and P₂\n\nIII. P₁ sin θ₁ = P₂ sin θ₂:\n\nTRUE ✓\nVertical equilibrium equation\nUpward and downward vertical components balance\n\nCorrect statements: II and III"
       },
       {
         "id": 958,
@@ -25969,18 +25285,6 @@
         "explanation": "No explanation provided."
       },
       {
-        "id": 502,
-        "text": "Find the tension in the two cords shown in the figure above. Neglect the mass of the cords, and assume that the angle is 38° and the mass m is 220 kg\n[Take g = 9.8 ms⁻²]",
-        "options": [
-          "T₁ = 2864 N, T₂= 3612 N",
-          " T₁= 3612 N, T₂ = 2864 N",
-          "T₁= 3502 N, T₂= 2760 N",
-          "T₁ = 2760 N, T₂ = 3502 N"
-        ],
-        "answer": 2,
-        "explanation": "Given information:\n\nMass, m = 220 kg\nAngle with horizontal, θ = 38°\nAcceleration due to gravity, g = 9.8 m/s²\nT₁ = tension in inclined cord\nT₂ = tension in horizontal cord\nWeight W = 2156 N (acts vertically downward)\n\nSolution:\nStep 1: Calculate the weight of the mass\nW = mg = 220 × 9.8 = 2156 N\nStep 2: Analyze forces at the junction point\nAt the junction, three forces act in equilibrium:\n\nT₁ (along inclined cord at 38° to horizontal)\nT₂ (along horizontal cord)\nW = 2156 N (vertically downward)\n\nStep 3: Resolve forces vertically\nΣFᵧ = 0\nT₁ sin 38° = W\nT₁ sin 38° = 2156\nT₁ = 2156/sin 38°\nT₁ = 2156/0.6157\nT₁ = 3502 N\nStep 4: Resolve forces horizontally\nΣFₓ = 0\nT₁ cos 38° = T₂\nT₂ = 3502 × cos 38°\nT₂ = 3502 × 0.788\nT₂ = 2760 N  https://res.cloudinary.com/aloc-ng/image/upload/v1765614459/ALOC-Questions/Physics/2023/physics_2023-Q3_SOLUTION_aannes.png"
-      },
-      {
         "id": 38,
         "text": "The silver wall of a vacuum flask prevents heat loss due to ",
         "options": [
@@ -26689,18 +25993,6 @@
         "explanation": "A hydrometer measures the relative density of a liquid using the flotation method - it floats at different depths depending on the liquid's density."
       },
       {
-        "id": 782,
-        "text": "In the diagram above, if the magnetic field points into the paper and the force on a current-carrying conductor points upwards, what is the direction of the current?",
-        "options": [
-          "Upwards",
-          "Downwards",
-          "Right",
-          "Left"
-        ],
-        "answer": 3,
-        "explanation": "Solution:\n\nStep 1: Recall Fleming's Left-Hand Rule\nFor a current-carrying conductor in a magnetic field, Fleming's Left-Hand Rule states:\n\nThumb: direction of force (motion)\n\nFirst finger: direction of magnetic field\n\nSecond (middle) finger: direction of current\n\nAll three are mutually perpendicular.\n\nStep 2: Apply the rule\n\nMagnetic field (first finger): into the paper (away from you)\n\nForce (thumb): upwards\n\nTo have these two directions, the current (second finger) must point to the left.\n\nStep 3: Visualize\nIf the field is into the paper and force is up, the only perpendicular direction remaining for current is left."
-      },
-      {
         "id": 49,
         "text": "Which of these is not contained in a dry cell? ",
         "options": [
@@ -27097,18 +26389,6 @@
         "explanation": "Given information:\n\nPrism angle (A) = 60°\nRefractive index (n) = 1.5\nsin⁻¹(0.75) = 49°\nMinimum deviation (δₘ) = ?\n\nFormula for minimum deviation:\nn = sin[(A + δₘ)/2] / sin(A/2)\nRearranging:\nsin[(A + δₘ)/2] = n × sin(A/2)\nSubstituting values:\nsin[(60° + δₘ)/2] = 1.5 × sin(60°/2)\nsin[(60° + δₘ)/2] = 1.5 × sin(30°)\nsin[(60° + δₘ)/2] = 1.5 × 0.5\nsin[(60° + δₘ)/2] = 0.75\nUsing the given information:\n(60° + δₘ)/2 = sin⁻¹(0.75) = 49°\nSolving for δₘ:\n60° + δₘ = 2 × 49°\n60° + δₘ = 98°\nδₘ = 98° - 60°\nδₘ = 38°"
       },
       {
-        "id": 740,
-        "text": "In the diagram above, the pressure of the gas is",
-        "options": [
-          " 86 cm of mercury",
-          "66 cm of mercury",
-          "96 cm of mercury",
-          "76 cm mercury"
-        ],
-        "answer": 0,
-        "explanation": "Pressure of the Gas, P = A + h\n= 76 + 10\n86 cm Hg"
-      },
-      {
         "id": 50,
         "text": "When a yellow card is observed through a blue glass, the card would appear as ",
         "options": [
@@ -27191,18 +26471,6 @@
         ],
         "answer": 3,
         "explanation": "\nGiven information:\nTen 60 W bulbs\nFive 40 W bulbs\nTime interval = 24 hours (assumed daily usage)\n\nSolution:\n\nStep 1: Calculate total power\nTotal power = (10 × 60 W) + (5 × 40 W) = 600 W + 200 W = 800 W\n\nStep 2: Convert power to kilowatts\n800 W = 0.8 kW\n\nStep 3: Calculate energy consumed\nEnergy = Power × Time = 0.8 kW × 24 h = 19.2 kWh"
-      },
-      {
-        "id": 683,
-        "text": "\nThe value of F in the figure above when in equilibrium is",
-        "options": [
-          "10N",
-          "12N",
-          " 20N",
-          "27N"
-        ],
-        "answer": 0,
-        "explanation": "For equilibrium, F must be equal in magnitude to the resultant of the 10 N and 17 N forces (but opposite in direction).\n\nUsing the cosine rule:\n\nR² = 10² + 17² + 2(10)(17)cos150°\n\ncos150° = −0.866\n\nR² = 100 + 289 − 294.4\nR² ≈ 94.6\nR ≈ 9.7 N ≈ 10 N"
       },
       {
         "id": 444,
@@ -27479,18 +26747,6 @@
         ],
         "answer": 3,
         "explanation": "Understanding cell types:\nPrimary cells:\n\nNon-rechargeable (disposable)\nExamples: dry cells, alkaline batteries\nRelatively high internal resistance\nCannot produce large currents for long periods\nChemical reactions are irreversible\n\nSecondary cells:\n\nRechargeable\nExamples: lead-acid batteries, lithium-ion batteries\nLow internal resistance\nCan deliver large currents for extended periods\nChemical reactions are reversible\n\nSecondary (rechargeable) cells have very low internal resistance, which allows them to deliver large currents efficiently."
-      },
-      {
-        "id": 562,
-        "text": "The value of R required to make the galvanometer measure voltage up to 40V in the diagram above is?",
-        "options": [
-          "1885Ω",
-          "1990Ω",
-          "1995Ω",
-          "1100Ω"
-        ],
-        "answer": 1,
-        "explanation": "Given information:\n\nMaximum current through galvanometer, I = 20 mA = 0.020 A\nInternal resistance of galvanometer, r = 10 Ω\nMaximum voltage to be measured, V = 40 V\nMultiplier resistance, R = ?\n\nSolution:\nStep 1: Understand the circuit\nThe multiplier resistance R is connected in series with the galvanometer to extend its voltage range. The same current flows through both R and the galvanometer.\nStep 2: Apply voltage division\nTotal voltage = Voltage across R + Voltage across galvanometer\nV = IR + Ir\nStep 3: Substitute the known values\n40 = 0.020 × R + 0.020 × 10\n40 = 0.020R + 0.2\nStep 4: Solve for R\n40 - 0.2 = 0.020R\n39.8 = 0.020R\nR = 39.8/0.020\nR = 1990 Ω"
       },
       {
         "id": 1137,
@@ -29845,18 +29101,6 @@
         "explanation": "Given information:\n\nLoad (L) = 120.0 N\nEfficiency = 40% = 0.40\nEffort (W) = ?\nFrom diagram: Counting the supporting strings, V.R = 6\n\nStep 1: Calculate Mechanical Advantage (M.A)\nEfficiency = M.A / V.R\nRearranging:\nM.A = Efficiency × V.R\nM.A = 0.40 × 6\nM.A = 2.4\nStep 2: Calculate Effort using M.A\nM.A = Load / Effort\nRearranging:\nEffort = Load / M.A\nSubstituting values:\nW = 120.0 / 2.4\nW = 50.0 N"
       },
       {
-        "id": 531,
-        "text": "A block of mass 0.5 kg is suspended at the 40 cm mark of a light metre rule AB that is pivoted at point E, the 90 cm mark, and is kept at equilibrium by a string attached at point D, the 60 cm mark, as shown in the figure above. Find the tension T in the string. [Take g = 10ms⁻²]",
-        "options": [
-          "16.67N",
-          "15.67N",
-          "14.67N",
-          "18.67N"
-        ],
-        "answer": 0,
-        "explanation": "Given information:\n\nMass of block, m = 0.5 kg\nPosition of block (C) = 40 cm mark\nPosition of pivot (E) = 90 cm mark\nPosition of string (D) = 60 cm mark\nAngle of string = 30° to the horizontal\ng = 10 m/s²\n\nSolution:\nStep 1: Calculate weight of block\nW = mg\nW = 0.5 × 10\nW = 5 N (acting downward at C)\nStep 2: Determine perpendicular distances from pivot E\nDistance from E to C:\ndC = 90 - 40 = 50 cm = 0.50 m\nDistance from E to D:\ndD = 90 - 60 = 30 cm = 0.30 m\nStep 3: Resolve tension into vertical component\nThe vertical component of tension creates the moment:\nTvertical = T sin 30° = T × 0.5 = 0.5T\nStep 4: Apply principle of moments (about pivot E)\nFor equilibrium, clockwise moment = anticlockwise moment\nMoment due to weight = Moment due to tension\nW × dC = Tvertical × dD\n5 × 0.50 = 0.5T × 0.30\n2.5 = 0.15T\nStep 5: Solve for tension\nT = 2.5/0.15\nT = 16.67 N"
-      },
-      {
         "id": 677,
         "text": "The north pole of a magnet can never be separated from the south pole because of the property knowledge as?",
         "options": [
@@ -30205,18 +29449,6 @@
         "explanation": "Given information:\n\nMass of copper (m_c) = 2 kg\nTemperature change (ΔT) = 100 - 0 = 100°C\nSpecific heat capacity of copper (c) = 400 J/(kg·K)\nLatent heat of fusion of ice (L_f) = 3.3 × 10⁵ J/kg\nMass of ice melted (m) = ?\n\nEnergy conservation:\nHeat lost by copper = Heat gained by ice melting\nm_c × c × ΔT = m × L_f\nSubstituting values:\n2 × 400 × 100 = m × (3.3 × 10⁵)\n80,000 = m × 330,000\nSolving for m:\nm = 80,000 / 330,000\nm = 80/330\nm = 8/33 kg\nConverting to decimal:\nm = 8/33 ≈ 0.242 kg"
       },
       {
-        "id": 776,
-        "text": "In the diagram above, a rod 50 cm long of uniform cross-section is suspended horizontally on a fulcrum, F, by the action of two forces. What is the weight of the rod?",
-        "options": [
-          "None of the above",
-          "40N",
-          " 80N",
-          "120N"
-        ],
-        "answer": 1,
-        "explanation": "\nStep 1: Identify distances from fulcrum (at 15 cm)\nLeft side (anticlockwise):\n\n200N at 5 cm: Distance from fulcrum = 15 - 5 = 10 cm\n\nRight side (clockwise):\n\nRod weight W at 25 cm: Distance from fulcrum = 25 - 15 = 10 cm\n40N at 45 cm: Distance from fulcrum = 45 - 15 = 30 cm\n\nStep 2: Apply principle of moments\nFor equilibrium (rod balanced horizontally):\nSum of anticlockwise moments = Sum of clockwise moments\nAnticlockwise moments:\n200 × 10 = 2000 N·cm\nClockwise moments:\nW × 10 + 40 × 30 = 10W + 1200 N·cm\nStep 3: Solve for W\n2000 = 10W + 1200\n10W = 2000 - 1200\n10W = 800\nW = 80N"
-      },
-      {
         "id": 582,
         "text": "If a body in linear motion changes from point P to Q, the motion is ",
         "options": [
@@ -30227,18 +29459,6 @@
         ],
         "answer": 0,
         "explanation": "If a body in linear motion changes from point P to Q, the motion is Translational.\n\nTranslational motion refers to the movement of an object from one location to another in a straight line, without any rotation involved."
-      },
-      {
-        "id": 222,
-        "text": "In the diagram above, which of the following velocity-time graphs shows uniform acceleration of a body from rest?",
-        "options": [
-          "C",
-          "D",
-          "B",
-          "A"
-        ],
-        "answer": 2,
-        "explanation": "Understanding uniform acceleration from rest:\n\n\"From rest\" means initial velocity = 0 (starts at origin)\n\"Uniform acceleration\" means constant acceleration (velocity increases at a steady rate)\nA velocity-time graph with uniform acceleration is a straight line starting from the origin\n\nAnalyzing the graphs:\nGraph A: Curved line - represents non-uniform (changing) acceleration ✗\nGraph B: Straight line starting from origin - represents uniform acceleration from rest ✓\nGraph C: Curved line (steep then flattening) - represents decreasing acceleration ✗\nGraph D: Curved line - represents non-uniform acceleration ✗\nKey point:\nFor uniform acceleration, the slope (acceleration) must be constant, which gives a straight line on a velocity-time graph.\n\nGraph B shows uniform acceleration from rest because it's a straight line starting from the origin, indicating constant acceleration."
       },
       {
         "id": 13,
@@ -30973,18 +30193,6 @@
         "explanation": "Surface tension is the force that acts on the surface of a liquid, tending to minimize the surface area. It is caused by the cohesive forces between the molecules of the liquid. The stronger the cohesive forces, the higher the surface tension.\n\nMercury has the highest surface tension of all the liquids listed. This is because the atoms of mercury are very close together, and they have a strong attraction for each other. This strong cohesive force results in a high surface tension."
       },
       {
-        "id": 639,
-        "text": "The phase difference between waves P and q in the diagram above is",
-        "options": [
-          "2π",
-          "π",
-          " π/4",
-          "π/2"
-        ],
-        "answer": 3,
-        "explanation": "\nStep 1: Identify wave characteristics\nBoth waves are sinusoidal with:\n\nSame wavelength (period)\nSame amplitude\nDifferent starting positions (phase shift)\n\nStep 2: Determine the shift\nObserving the waves:\n\nWave P starts at zero and increases\nWave Q reaches its maximum when P is at zero\nThis represents a quarter-cycle shift\n\nStep 3: Express shift in terms of wavelength\nOne complete cycle = 2π radians = 360°\nQuarter cycle shift = 2π/4 = π/2 radians = 90°\nStep 4: Verify the phase difference\nWhen wave P is at:\n\nZero displacement (going up) → Wave Q is at maximum\nMaximum → Wave Q is at zero (going down)\nZero (going down) → Wave Q is at minimum\nMinimum → Wave Q is at zero (going up)\n\nThis confirms a 90° or π/2 phase difference."
-      },
-      {
         "id": 148,
         "text": "What is the relationship mechanical advantage (MA) velocity Ratio (V.R) and efficiency with percentage?",
         "options": [
@@ -31019,18 +30227,6 @@
         ],
         "answer": 1,
         "explanation": "Given information:\n\nWavelength (λ) = 1.65 m\nSpeed of sound (v) = 330 m/s\nPeriod (T) = ?\n\nStep 1: Calculate frequency using wave equation\nv = fλ\nRearranging:\nf = v/λ\nSubstituting values:\nf = 330/1.65\nf = 200 Hz\nStep 2: Calculate period\nPeriod is the reciprocal of frequency:\nT = 1/f\nSubstituting:\nT = 1/200\nT = 0.005 s\nExplanation:\nThe period represents the time for one complete wave cycle (oscillation). With a frequency of 200 Hz (200 cycles per second), each cycle takes 1/200 = 0.005 seconds."
-      },
-      {
-        "id": 943,
-        "text": "In the diagram above, a 200 W bulb is lighted by a 240 V a.c mains supply. If 1kwh is sold at N40, the cost of keeping the bulb lighted for a day is?",
-        "options": [
-          "₦1,920.00",
-          " ₦192.00",
-          " ₦19.20",
-          " ₦1.92"
-        ],
-        "answer": 1,
-        "explanation": "Energy consumed = power x time\n= 200W x 24hr = 4800wh\n= 4.8 kwh\nBut 1 kwh cost N40\n∴ 4.8kwh costs 4.8 x 40\n= ₦192"
       },
       {
         "id": 625,
@@ -31451,18 +30647,6 @@
         ],
         "answer": 0,
         "explanation": "Ripple in a power supply is fundamentally caused by using an alternating current source, which produces a pulsating DC output after rectification that retains some AC variation."
-      },
-      {
-        "id": 517,
-        "text": "A 200 kg load is raised using a 110 m long lever as shown in the diagram above. The load is 10m from the pivot P. If the efficiency of the lever is 80%, find the effort E required to lift the load. [Take g = 10ms⁻²]",
-        "options": [
-          " 250 N",
-          "300 N",
-          "450 N",
-          "200 N"
-        ],
-        "answer": 0,
-        "explanation": "Given information:\n\nMass of load, m = 200 kg\nTotal lever length = 110 m\nLoad distance from pivot, d_load = 10 m\nEffort distance from pivot, d_effort = 110 - 10 = 100 m\nEfficiency, η = 80% = 0.8\nAcceleration due to gravity, g = 10 m/s²\nEffort required, E = ?\n\nSolution:\nStep 1: Calculate the load force (weight)\nLoad = mg\nLoad = 200 × 10\nLoad = 2000 N\nStep 2: Apply the principle of moments for ideal lever\nFor an ideal lever (100% efficiency):\nLoad × d_load = Effort × d_effort\n2000 × 10 = E_ideal × 100\n20,000 = E_ideal × 100\nE_ideal = 200 N\nStep 3: Account for efficiency\nSince efficiency = 80%, more effort is needed:\nEfficiency = (Ideal Effort/Actual Effort) × 100%\n0.8 = 200/E_actual\nE_actual = 200/0.8\nE_actual = 250 N"
       },
       {
         "id": 1029,
@@ -38800,18 +37984,6 @@
         ],
         "answer": 1,
         "explanation": "The graph shows volume on the y-axis and temperature in Kelvin on the x-axis, producing a straight line through the origin. This represents a direct proportionality (V ∝ T at constant pressure), which illustrates Charles's Law: the volume of a fixed mass of gas is directly proportional to its absolute temperature at constant pressure."
-      },
-      {
-        "id": 399,
-        "text": "In the diagram above, X is the",
-        "options": [
-          "Enthalpy",
-          "Activated complex",
-          "Activation energy",
-          "Enthalpy change"
-        ],
-        "answer": 3,
-        "explanation": "In the energy profile diagram, X is the arrow showing the difference in energy level between the reactants and the products. This energy difference is the enthalpy change (ΔH) of the reaction. Since products are lower in energy than reactants, ΔH is negative (exothermic). The activation energy would be measured from reactants to the peak, not between reactants and products."
       },
       {
         "id": 708,
