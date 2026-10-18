@@ -3,7 +3,7 @@ import subjectsData from './data/offline_questions.json';
 import { 
   Home, Target, PlayCircle, FileText, Calendar, 
   Settings, Bell, ArrowRight, ArrowLeft,
-  CheckCircle2, XCircle, Calculator as CalcIcon, Flag, RefreshCw, X, Lightbulb, BellRing, User, ChevronRight, Moon, BookOpen, Clock, LogOut, Bookmark
+  CheckCircle2, XCircle, Calculator as CalcIcon, RefreshCw, X, Lightbulb, BellRing, ChevronRight, Moon, BookOpen, Clock, LogOut, Bookmark, Check, Eye
 } from 'lucide-react';
 import Calculator from './Calculator';
 import './Calculator.css';
@@ -12,8 +12,8 @@ function App() {
   const [user, setUser] = useState(null);
   const [loginName, setLoginName] = useState('');
   
-  const [currentTab, setCurrentTab] = useState('home'); // home, practice, mock, subjects, settings, plan, bookmarks
-  const [gameState, setGameState] = useState('dashboard'); // dashboard, testing, feedback, results
+  const [currentTab, setCurrentTab] = useState('home'); // home, practice, mock, subjects, settings, plan
+  const [gameState, setGameState] = useState('dashboard'); // dashboard, testing, feedback, results, review
   
   const [selectedSubjects, setSelectedSubjects] = useState([]);
   const [currentQuestions, setCurrentQuestions] = useState([]);
@@ -22,14 +22,16 @@ function App() {
   const [timeLeft, setTimeLeft] = useState(0);
   const [totalTime, setTotalTime] = useState(0);
   
-  // Settings & Progress
+  // Settings & Custom Question Count
   const [examMode, setExamMode] = useState('practice'); 
-  const [questionsPerSubject, setQuestionsPerSubject] = useState(40);
+  const [questionsPerSubject, setQuestionsPerSubject] = useState(20);
+  const [customInputVal, setCustomInputVal] = useState('20');
   const [showCalculator, setShowCalculator] = useState(false);
   const [soundEnabled, setSoundEnabled] = useState(true);
   const [showNotifications, setShowNotifications] = useState(false);
   const [stats, setStats] = useState({});
   const [flagged, setFlagged] = useState([]);
+  const [reviewFilter, setReviewFilter] = useState('all'); // all, wrong, correct
 
   // Initialize Data
   useEffect(() => {
@@ -50,6 +52,15 @@ function App() {
 
     const savedFlagged = localStorage.getItem('jamb_flagged');
     if (savedFlagged) setFlagged(JSON.parse(savedFlagged));
+
+    const savedCount = localStorage.getItem('jamb_q_count');
+    if (savedCount) {
+      const parsed = parseInt(savedCount, 10);
+      if (!isNaN(parsed) && parsed > 0) {
+        setQuestionsPerSubject(parsed);
+        setCustomInputVal(String(parsed));
+      }
+    }
   }, []);
 
   // Timer
@@ -85,6 +96,13 @@ function App() {
       setUser(null);
       setLoginName('');
     }
+  };
+
+  const setQuestionCount = (count) => {
+    const valid = Math.max(1, Math.min(100, count));
+    setQuestionsPerSubject(valid);
+    setCustomInputVal(String(valid));
+    localStorage.setItem('jamb_q_count', String(valid));
   };
 
   const toggleSubject = (subjectKey) => {
@@ -143,7 +161,7 @@ function App() {
     
     let combined = [];
     selectedSubjects.forEach(sub => {
-      let qs = subjectsData[sub].questions;
+      let qs = subjectsData[sub].questions.filter(q => q.options && q.options.length >= 2);
       qs = [...qs].sort(() => 0.5 - Math.random());
       
       let limit = questionsPerSubject;
@@ -172,7 +190,6 @@ function App() {
   const startBookmarksPractice = () => {
     if (flagged.length === 0) return;
     setExamMode('practice');
-    // Shuffle flagged questions
     const combined = [...flagged].sort(() => 0.5 - Math.random());
     setCurrentQuestions(combined);
     setAnswers({});
@@ -187,7 +204,7 @@ function App() {
   const finishExam = () => {
     const newStats = { ...stats };
     currentQuestions.forEach((q, idx) => {
-      if (answers[idx] !== undefined && q.subjectKey) { // Skip if it's a bookmark without subjectKey
+      if (answers[idx] !== undefined && q.subjectKey && newStats[q.subjectKey]) {
         newStats[q.subjectKey].answered = Math.min(newStats[q.subjectKey].answered + 1, newStats[q.subjectKey].total);
         if (answers[idx] === q.answer) {
           newStats[q.subjectKey].correct += 1;
@@ -279,18 +296,18 @@ function App() {
       </div>
 
       {showNotifications && (
-        <div style={{position:'absolute', top:'70px', right:'1.5rem', background:'var(--bg-card)', border:'1px solid var(--border)', borderRadius:'16px', padding:'1rem', zIndex:100, width:'250px', boxShadow:'0 10px 30px rgba(0,0,0,0.5)', animation:'fadeIn 0.2s ease-out'}}>
+        <div style={{position:'absolute', top:'70px', right:'1.5rem', background:'var(--bg-card)', border:'1px solid var(--border)', borderRadius:'16px', padding:'1rem', zIndex:100, width:'260px', boxShadow:'0 10px 30px rgba(0,0,0,0.5)', animation:'fadeIn 0.2s ease-out'}}>
           <div style={{display:'flex', justifyContent:'space-between', alignItems:'center', marginBottom:'1rem'}}>
              <h4 style={{fontWeight:700}}>Notifications</h4>
              <X size={16} color="var(--text-muted)" onClick={()=>setShowNotifications(false)} style={{cursor:'pointer'}}/>
           </div>
           <div style={{fontSize:'0.85rem', color:'var(--text-muted)', marginBottom:'0.75rem', borderBottom:'1px solid var(--border)', paddingBottom:'0.75rem'}}>
              <strong style={{color:'var(--primary)', display:'block'}}>Welcome {user.name}!</strong>
-             Start your first practice session today to build momentum.
+             Choose your custom question count and start practicing.
           </div>
           <div style={{fontSize:'0.85rem', color:'var(--text-muted)'}}>
-             <strong style={{color:'var(--color-purple)', display:'block'}}>Mock Exams Available</strong>
-             Simulate the real JAMB experience completely offline.
+             <strong style={{color:'var(--color-purple)', display:'block'}}>Detailed Explanations</strong>
+             You can now review step-by-step calculations after every exam!
           </div>
         </div>
       )}
@@ -309,8 +326,39 @@ function App() {
           <div className="progress-bar-fill"></div>
         </div>
         <div className="progress-labels">
-          <span className="active">You're on track!</span>
-          <span>Target: 250+</span>
+          <span className="active">Target: 250+ / 400</span>
+          <span>Offline Database Ready</span>
+        </div>
+      </div>
+
+      {/* Quick Question Count Selector on Dashboard */}
+      <div style={{padding:'0 1.5rem', marginBottom:'1.5rem'}}>
+        <div style={{display:'flex', justifyContent:'space-between', alignItems:'center', marginBottom:'0.25rem'}}>
+          <span style={{fontSize:'0.85rem', fontWeight:600, color:'var(--text-main)'}}>Questions Per Subject</span>
+          <span style={{fontSize:'0.85rem', color:'var(--primary)', fontWeight:700}}>{questionsPerSubject} Qs</span>
+        </div>
+        <div className="count-pills">
+          {[5, 10, 15, 20, 40].map(cnt => (
+            <button 
+              key={cnt}
+              className={`count-pill ${questionsPerSubject === cnt ? 'active' : ''}`}
+              onClick={() => setQuestionCount(cnt)}
+            >
+              {cnt} Qs
+            </button>
+          ))}
+          <button 
+            className={`count-pill ${![5, 10, 15, 20, 40].includes(questionsPerSubject) ? 'active' : ''}`}
+            onClick={() => {
+              const val = prompt("Enter custom number of questions (1 - 100):", questionsPerSubject);
+              if (val) {
+                const parsed = parseInt(val, 10);
+                if (!isNaN(parsed) && parsed > 0) setQuestionCount(parsed);
+              }
+            }}
+          >
+            Custom ✍️
+          </button>
         </div>
       </div>
 
@@ -324,7 +372,7 @@ function App() {
           </div>
           <div>
             <h3 style={{color:'var(--text-main)'}}>Start Practice</h3>
-            <p>Jump into a subject and sharpen your skills.</p>
+            <p>Instant answers and step-by-step calculations.</p>
           </div>
           <div className="action-arrow">
             <ArrowRight size={16} color="var(--primary)" />
@@ -340,7 +388,7 @@ function App() {
           </div>
           <div>
             <h3 style={{color:'var(--text-main)'}}>Take Mock Exam</h3>
-            <p>Simulate the real JAMB experience.</p>
+            <p>Timed real exam simulator with post-exam review.</p>
           </div>
           <div className="action-arrow">
             <ArrowRight size={16} color="var(--color-purple)" />
@@ -385,7 +433,7 @@ function App() {
               const color = colors[i % colors.length];
               
               return (
-                <div key={subKey} style={{background:'var(--bg-card)', padding:'1rem', borderRadius:'16px', border:'1px solid var(--border)', transition:'transform 0.2s', cursor:'pointer'}} onClick={()=>setCurrentTab('subjects')}>
+                <div key={subKey} style={{background:'var(--bg-card)', padding:'1rem', borderRadius:'16px', border:'1px solid var(--border)', transition:'transform 0.2s', cursor:'pointer'}} onClick={()=>{ setSelectedSubjects([subKey]); setCurrentTab('subjects'); }}>
                   <div style={{display:'flex', gap:'0.5rem', alignItems:'center', marginBottom:'1rem'}}>
                     <div style={{background:`rgba(255,255,255,0.05)`, padding:'0.5rem', borderRadius:'8px', color: color}}>
                       {icons[i % icons.length]}
@@ -393,7 +441,7 @@ function App() {
                     <span style={{fontSize:'0.85rem', fontWeight:600}}>{subjectsData[subKey]?.name || subKey}</span>
                   </div>
                   <div style={{textAlign:'center', fontWeight:700, fontSize:'1.5rem', color: color}}>{pct}%</div>
-                  <div style={{textAlign:'center', fontSize:'0.75rem', color:'var(--text-muted)'}}>{stat.answered} / {stat.total}</div>
+                  <div style={{textAlign:'center', fontSize:'0.75rem', color:'var(--text-muted)'}}>{stat.answered} / {stat.total} Done</div>
                 </div>
               );
            })}
@@ -412,25 +460,27 @@ function App() {
          <div style={{background:'var(--bg-card)', padding:'1.5rem', borderRadius:'20px', border:'1px solid var(--border)', marginBottom:'2rem', position:'relative', overflow:'hidden'}}>
            <div style={{position:'absolute', right:'-20px', top:'-20px', opacity:0.1}}><Target size={120} color="var(--primary)"/></div>
            <h3 style={{color:'var(--primary)', marginBottom:'0.5rem'}}>Today's Objective</h3>
-           <p style={{color:'var(--text-muted)', fontSize:'0.9rem', marginBottom:'1rem'}}>Complete 50 questions to maintain your streak.</p>
+           <p style={{color:'var(--text-muted)', fontSize:'0.9rem', marginBottom:'1rem'}}>Complete {questionsPerSubject * 2} questions to maintain your study streak.</p>
            <div style={{background:'var(--bg-main)', height:'8px', borderRadius:'4px', overflow:'hidden'}}>
-             <div style={{width:'30%', background:'var(--primary)', height:'100%', borderRadius:'4px'}}></div>
+             <div style={{width:'40%', background:'var(--primary)', height:'100%', borderRadius:'4px'}}></div>
            </div>
-           <p style={{fontSize:'0.8rem', color:'var(--text-muted)', marginTop:'0.5rem', fontWeight:600}}>15 / 50 Completed</p>
+           <p style={{fontSize:'0.8rem', color:'var(--text-muted)', marginTop:'0.5rem', fontWeight:600}}>In Progress</p>
          </div>
          
-         <h3 style={{fontSize:'1.2rem', fontWeight:700, margin:'1.5rem 0 1rem'}}>Focus Areas (Weaknesses)</h3>
+         <h3 style={{fontSize:'1.2rem', fontWeight:700, margin:'1.5rem 0 1rem'}}>Focus Areas (Needs Improvement)</h3>
          <div style={{display:'flex', flexDirection:'column', gap:'1rem'}}>
             {weakSubjects.length === 0 ? (
-              <div style={{background:'var(--bg-card)', padding:'1rem', borderRadius:'16px', border:'1px solid var(--border)', textAlign:'center'}}>
-                 <p style={{color:'var(--text-muted)', fontSize:'0.9rem'}}>No weak areas detected yet. Keep practicing!</p>
+              <div style={{background:'var(--bg-card)', padding:'1.5rem', borderRadius:'16px', border:'1px solid var(--border)', textAlign:'center'}}>
+                 <CheckCircle2 size={32} color="var(--primary)" style={{margin:'0 auto 0.5rem'}}/>
+                 <p style={{color:'var(--text-main)', fontWeight:600, fontSize:'0.95rem'}}>All subjects look strong!</p>
+                 <p style={{color:'var(--text-muted)', fontSize:'0.85rem', marginTop:'0.25rem'}}>Keep practicing to maintain consistency.</p>
               </div>
             ) : (
-              weakSubjects.map((subKey, i) => (
+              weakSubjects.map((subKey) => (
                 <div key={subKey} style={{background:'var(--bg-card)', padding:'1rem', borderRadius:'16px', border:'1px solid var(--border)', display:'flex', justifyContent:'space-between', alignItems:'center'}}>
                    <div>
                      <h4 style={{color:'var(--color-orange)', marginBottom:'0.2rem'}}>{subjectsData[subKey]?.name}</h4>
-                     <p style={{fontSize:'0.85rem', color:'var(--text-muted)'}}>Accuracy is below 60%. Needs review.</p>
+                     <p style={{fontSize:'0.85rem', color:'var(--text-muted)'}}>Accuracy below 60%. Review recommended.</p>
                    </div>
                    <button onClick={()=>{ setSelectedSubjects([subKey]); setExamMode('practice'); setCurrentTab('subjects'); }} style={{background:'rgba(245, 158, 11, 0.1)', color:'var(--color-orange)', border:'none', padding:'0.5rem 1rem', borderRadius:'8px', fontWeight:600, cursor:'pointer'}}>
                      Revise
@@ -448,14 +498,52 @@ function App() {
   };
 
   const renderSubjects = () => (
-    <div style={{padding: '1.5rem'}}>
+    <div style={{padding: '1.5rem', paddingBottom: '6rem'}}>
       <div className="test-header" style={{padding:'0 0 1.5rem', background:'transparent'}}>
         <button className="test-back-btn" onClick={() => setCurrentTab('home')}>
           <ArrowLeft size={20} /> Subjects
         </button>
       </div>
       
-      <p style={{color:'var(--text-muted)', marginBottom:'1.5rem', fontSize:'0.9rem'}}>Select up to 4 subjects for your {examMode === 'practice' ? 'practice session' : 'mock exam'}.</p>
+      <p style={{color:'var(--text-muted)', marginBottom:'1.25rem', fontSize:'0.9rem'}}>Select up to 4 subjects for your {examMode === 'practice' ? 'practice session' : 'mock exam'}.</p>
+
+      {/* In-view Custom Questions Configuration */}
+      <div style={{background:'var(--bg-card)', padding:'1rem 1.25rem', borderRadius:'16px', border:'1px solid var(--border)', marginBottom:'1.5rem'}}>
+        <div style={{display:'flex', justifyContent:'space-between', alignItems:'center', marginBottom:'0.5rem'}}>
+          <span style={{fontSize:'0.9rem', fontWeight:600, color:'var(--text-main)'}}>Number of Questions</span>
+          <span style={{fontSize:'0.9rem', color:'var(--primary)', fontWeight:700}}>{questionsPerSubject} per subject</span>
+        </div>
+        <div className="count-pills">
+          {[5, 10, 15, 20, 30, 40].map(cnt => (
+            <button 
+              key={cnt}
+              className={`count-pill ${questionsPerSubject === cnt ? 'active' : ''}`}
+              onClick={() => setQuestionCount(cnt)}
+            >
+              {cnt}
+            </button>
+          ))}
+        </div>
+        <div className="custom-count-input-wrapper">
+          <input 
+            type="number"
+            className="custom-count-input"
+            placeholder="Or type custom amount (e.g. 25)"
+            value={customInputVal}
+            onChange={(e) => {
+              setCustomInputVal(e.target.value);
+              const val = parseInt(e.target.value, 10);
+              if (!isNaN(val) && val > 0 && val <= 100) {
+                setQuestionsPerSubject(val);
+                localStorage.setItem('jamb_q_count', String(val));
+              }
+            }}
+            min="1"
+            max="100"
+          />
+          <span style={{fontSize:'0.85rem', color:'var(--text-muted)'}}>questions</span>
+        </div>
+      </div>
 
       {Object.keys(subjectsData).map(key => {
         const isSelected = selectedSubjects.includes(key);
@@ -486,7 +574,7 @@ function App() {
         disabled={selectedSubjects.length === 0}
         style={{marginTop: '2rem', opacity: selectedSubjects.length === 0 ? 0.5 : 1, transition: 'all 0.3s'}}
       >
-        Start {examMode === 'practice' ? 'Practice' : 'Mock Exam'} {selectedSubjects.length > 0 ? `(${selectedSubjects.length})` : ''}
+        Start {examMode === 'practice' ? 'Practice' : 'Mock Exam'} {selectedSubjects.length > 0 ? `(${selectedSubjects.length * questionsPerSubject} Total Qs)` : ''}
       </button>
     </div>
   );
@@ -499,7 +587,7 @@ function App() {
         <div className="setting-item">
           <div className="setting-left">
             <Moon size={20} color="var(--text-muted)"/>
-            Dark Mode (Default)
+            Dark Mode (Emerald Study)
           </div>
           <label className="toggle-switch">
             <input type="checkbox" checked={true} readOnly />
@@ -510,7 +598,7 @@ function App() {
         <div className="setting-item">
           <div className="setting-left">
             <BellRing size={20} color="var(--text-muted)"/>
-            Sound Effects
+            Sound Effects & Chimes
           </div>
           <label className="toggle-switch">
             <input type="checkbox" checked={soundEnabled} onChange={(e)=>setSoundEnabled(e.target.checked)} />
@@ -529,20 +617,40 @@ function App() {
             onChange={(e) => setExamMode(e.target.value)}
             style={{width:'100%', padding:'1rem', borderRadius:'12px', background:'var(--bg-card-hover)', color:'var(--text-main)', border:'1px solid var(--border)', marginBottom:'1rem'}}
           >
-            <option value="practice">Practice Mode (Instant Feedback)</option>
-            <option value="exam">Mock Exam Mode</option>
+            <option value="practice">Practice Mode (Instant Feedback & Explanations)</option>
+            <option value="exam">Mock Exam Mode (Timed Simulation)</option>
           </select>
 
-          <label style={{display:'block', marginBottom:'0.5rem', fontSize:'0.9rem', color:'var(--text-muted)'}}>Questions per Subject</label>
-          <select 
-            value={questionsPerSubject} 
-            onChange={(e) => setQuestionsPerSubject(Number(e.target.value))}
-            style={{width:'100%', padding:'1rem', borderRadius:'12px', background:'var(--bg-card-hover)', color:'var(--text-main)', border:'1px solid var(--border)'}}
-          >
-            <option value={10}>10 Questions</option>
-            <option value={20}>20 Questions</option>
-            <option value={40}>40 Questions (Standard)</option>
-          </select>
+          <label style={{display:'block', marginBottom:'0.5rem', fontSize:'0.9rem', color:'var(--text-muted)'}}>Custom Questions per Subject</label>
+          <div className="count-pills">
+            {[5, 10, 15, 20, 30, 40].map(cnt => (
+              <button 
+                key={cnt}
+                className={`count-pill ${questionsPerSubject === cnt ? 'active' : ''}`}
+                onClick={() => setQuestionCount(cnt)}
+              >
+                {cnt} Qs
+              </button>
+            ))}
+          </div>
+          <div className="custom-count-input-wrapper">
+            <input 
+              type="number"
+              className="custom-count-input"
+              value={customInputVal}
+              onChange={(e) => {
+                setCustomInputVal(e.target.value);
+                const val = parseInt(e.target.value, 10);
+                if (!isNaN(val) && val > 0 && val <= 100) {
+                  setQuestionsPerSubject(val);
+                  localStorage.setItem('jamb_q_count', String(val));
+                }
+              }}
+              min="1"
+              max="100"
+            />
+            <span style={{fontSize:'0.85rem', color:'var(--text-muted)'}}>questions</span>
+          </div>
         </div>
       </div>
       
@@ -556,7 +664,7 @@ function App() {
     if (!currentQuestions || currentQuestions.length === 0) return null;
     
     const q = currentQuestions[currentQuestionIndex];
-    const letters = ['A', 'B', 'C', 'D'];
+    const letters = ['A', 'B', 'C', 'D', 'E'];
     const hasAnswered = answers[currentQuestionIndex] !== undefined;
     const isFlagged = flagged.find(f => f.text === q.text) !== undefined;
     
@@ -571,7 +679,7 @@ function App() {
               setCurrentTab('home');
             }
           }}>
-            <ArrowLeft size={20} /> Practice
+            <ArrowLeft size={20} /> {examMode === 'practice' ? 'Practice' : 'Mock'}
           </button>
           
           <div style={{display:'flex', gap:'1rem', alignItems:'center'}}>
@@ -579,13 +687,15 @@ function App() {
               <Clock size={18} />
               {formatTime(timeLeft)}
             </div>
-            <Settings size={20} color="var(--text-muted)" onClick={() => setShowCalculator(!showCalculator)} style={{cursor:'pointer'}} />
+            <button onClick={() => setShowCalculator(!showCalculator)} style={{background:'var(--bg-card)', border:'1px solid var(--border)', borderRadius:'10px', padding:'0.4rem', color:'var(--text-main)', cursor:'pointer', display:'flex', alignItems:'center'}}>
+              <CalcIcon size={18} />
+            </button>
           </div>
         </div>
 
         <div className="test-progress-container">
           <div className="test-progress-text">
-            {currentQuestionIndex + 1} / {currentQuestions.length}
+            Question {currentQuestionIndex + 1} of {currentQuestions.length}
           </div>
           <div className="test-progress-bar">
             <div className="test-progress-fill" style={{width: `${((currentQuestionIndex + 1) / currentQuestions.length) * 100}%`, transition:'width 0.3s ease-out'}}></div>
@@ -595,7 +705,7 @@ function App() {
         <div className="test-content">
           <div className="subject-pill">
             <BookOpen size={14} />
-            {q.subject || 'Mixed'}
+            {q.subject || 'JAMB Question'}
           </div>
 
           <div className="question-text" dangerouslySetInnerHTML={{ __html: q.text }} />
@@ -606,7 +716,7 @@ function App() {
           )}
 
           <div className="options-container">
-            {q.options.map((opt, idx) => {
+            {q.options && q.options.map((opt, idx) => {
               let rowCls = '';
               if (hasAnswered && examMode === 'practice') {
                 if (idx === q.answer) rowCls = 'correct';
@@ -621,12 +731,13 @@ function App() {
                   className={`option-row ${rowCls}`}
                   onClick={() => handleSelectOption(idx)}
                 >
-                  <div className="option-letter-circle">{letters[idx]}</div>
+                  <div className="option-letter-circle">{letters[idx] || idx + 1}</div>
                   <div className="option-text" dangerouslySetInnerHTML={{ __html: opt }} />
                   {rowCls === 'correct' && <CheckCircle2 size={24} color="var(--primary)" className="option-icon" />}
                   {rowCls === 'selected' && examMode === 'exam' && <CheckCircle2 size={24} color="var(--primary)" className="option-icon" />}
+                  {rowCls === 'wrong' && <XCircle size={24} color="var(--color-red)" className="option-icon" />}
                 </div>
-              )
+              );
             })}
           </div>
 
@@ -650,7 +761,7 @@ function App() {
                 }
               }}
             >
-              {currentQuestionIndex === currentQuestions.length - 1 ? 'Finish' : 'Next'} <ArrowRight size={20} />
+              {currentQuestionIndex === currentQuestions.length - 1 ? 'Finish Exam' : 'Next'} <ArrowRight size={20} />
             </button>
           </div>
         </div>
@@ -682,25 +793,15 @@ function App() {
                </div>
                <div>
                  <h3 style={{color: isCorrect ? 'var(--primary)' : 'var(--color-red)'}}>{isCorrect ? 'Correct!' : 'Incorrect'}</h3>
-                 <p>{isCorrect ? "That's right. Well done!" : "Keep practicing to improve."}</p>
+                 <p>{isCorrect ? "Spot on! Great work." : "Check the solution calculation below."}</p>
                </div>
              </div>
              <button onClick={()=>setGameState('testing')} style={{background:'transparent', border:'none', color:'var(--text-muted)', cursor:'pointer'}}><X size={24}/></button>
           </div>
 
-          {q.explanation && q.explanation.length > 5 && (
-            <div className="feedback-explanation">
-              <strong>Explanation:</strong>
-              <div style={{marginTop:'0.5rem'}} dangerouslySetInnerHTML={{ __html: q.explanation }} />
-            </div>
-          )}
-
-          <div className="key-takeaway">
-            <Lightbulb className="icon" size={20} style={{flexShrink:0}}/>
-            <div>
-              <h4>Key Takeaway</h4>
-              <p>Always double-check your steps to avoid simple mistakes.</p>
-            </div>
+          <div className="feedback-explanation">
+            <strong style={{color:'var(--primary)', display:'block', marginBottom:'0.5rem'}}>Solution / Calculation:</strong>
+            <div style={{marginTop:'0.25rem', whiteSpace:'pre-line', lineHeight:1.6}} dangerouslySetInnerHTML={{ __html: q.explanation || "No step-by-step calculation provided for this question." }} />
           </div>
 
           <button 
@@ -721,10 +822,141 @@ function App() {
     );
   };
 
+  const renderReviewScreen = () => {
+    const letters = ['A', 'B', 'C', 'D', 'E'];
+    const filteredQuestions = currentQuestions.filter((q, idx) => {
+      if (reviewFilter === 'correct') return answers[idx] === q.answer;
+      if (reviewFilter === 'wrong') return answers[idx] !== q.answer;
+      return true;
+    });
+
+    return (
+      <div className="review-screen">
+        <button className="test-back-btn" onClick={() => setGameState('results')} style={{marginBottom:'1.5rem'}}>
+          <ArrowLeft size={20} /> Back to Result Summary
+        </button>
+
+        <h2 style={{fontSize:'1.5rem', fontWeight:700, marginBottom:'0.5rem'}}>Review & Calculations</h2>
+        <p style={{color:'var(--text-muted)', fontSize:'0.9rem', marginBottom:'1.5rem'}}>Review all answers and step-by-step working.</p>
+
+        {/* Filter Pills */}
+        <div style={{display:'flex', gap:'0.5rem', marginBottom:'1.5rem'}}>
+          <button 
+            className={`count-pill ${reviewFilter === 'all' ? 'active' : ''}`}
+            onClick={() => setReviewFilter('all')}
+          >
+            All ({currentQuestions.length})
+          </button>
+          <button 
+            className={`count-pill ${reviewFilter === 'wrong' ? 'active' : ''}`}
+            onClick={() => setReviewFilter('wrong')}
+            style={{borderColor: reviewFilter === 'wrong' ? 'var(--color-red)' : undefined}}
+          >
+            Wrong / Missed
+          </button>
+          <button 
+            className={`count-pill ${reviewFilter === 'correct' ? 'active' : ''}`}
+            onClick={() => setReviewFilter('correct')}
+          >
+            Correct
+          </button>
+        </div>
+
+        {filteredQuestions.map((q, filteredIdx) => {
+          const originalIdx = currentQuestions.findIndex(orig => orig === q);
+          const userAnswerIdx = answers[originalIdx];
+          const isCorrect = userAnswerIdx === q.answer;
+          const isAnswered = userAnswerIdx !== undefined;
+
+          let cardClass = isCorrect ? 'correct-card' : (isAnswered ? 'wrong-card' : 'unanswered-card');
+
+          return (
+            <div key={originalIdx} className={`review-item-card ${cardClass}`}>
+              <div style={{display:'flex', justifyContent:'space-between', alignItems:'center', marginBottom:'0.75rem'}}>
+                <span style={{fontSize:'0.85rem', fontWeight:700, color:'var(--text-muted)'}}>Question #{originalIdx + 1} • {q.subject || ''}</span>
+                <span style={{
+                  fontSize:'0.8rem', 
+                  fontWeight:700, 
+                  padding:'0.25rem 0.6rem', 
+                  borderRadius:'8px',
+                  background: isCorrect ? 'rgba(16, 185, 129, 0.15)' : 'rgba(239, 68, 68, 0.15)',
+                  color: isCorrect ? 'var(--primary)' : 'var(--color-red)'
+                }}>
+                  {isCorrect ? 'Correct' : (isAnswered ? 'Wrong' : 'Unanswered')}
+                </span>
+              </div>
+
+              <div style={{fontSize:'1rem', fontWeight:600, marginBottom:'1rem', lineHeight:1.5}} dangerouslySetInnerHTML={{ __html: q.text }} />
+
+              {q.image && (
+                <div style={{ marginBottom: '1rem' }}>
+                  <img src={q.image} alt="diagram" style={{ maxWidth: '100%', borderRadius: '10px', border: '1px solid var(--border)' }} />
+                </div>
+              )}
+
+              {/* Options Breakdown */}
+              <div style={{display:'flex', flexDirection:'column', gap:'0.5rem', marginBottom:'1rem'}}>
+                {q.options && q.options.map((opt, optIdx) => {
+                  const isCorrectOpt = optIdx === q.answer;
+                  const isUserPicked = optIdx === userAnswerIdx;
+
+                  let optBorder = 'var(--border)';
+                  let optBg = 'transparent';
+                  let optColor = 'var(--text-main)';
+
+                  if (isCorrectOpt) {
+                    optBorder = 'var(--primary)';
+                    optBg = 'rgba(16, 185, 129, 0.08)';
+                    optColor = 'var(--primary)';
+                  } else if (isUserPicked && !isCorrect) {
+                    optBorder = 'var(--color-red)';
+                    optBg = 'rgba(239, 68, 68, 0.08)';
+                    optColor = 'var(--color-red)';
+                  }
+
+                  return (
+                    <div 
+                      key={optIdx}
+                      style={{
+                        padding:'0.75rem 1rem', 
+                        borderRadius:'10px', 
+                        border:`1px solid ${optBorder}`, 
+                        background: optBg, 
+                        display:'flex', 
+                        alignItems:'center', 
+                        gap:'0.75rem',
+                        fontSize:'0.9rem'
+                      }}
+                    >
+                      <span style={{fontWeight:700, color: optColor}}>{letters[optIdx] || optIdx + 1}.</span>
+                      <div style={{flex:1}} dangerouslySetInnerHTML={{ __html: opt }} />
+                      {isCorrectOpt && <CheckCircle2 size={18} color="var(--primary)" />}
+                      {isUserPicked && !isCorrect && <XCircle size={18} color="var(--color-red)" />}
+                    </div>
+                  );
+                })}
+              </div>
+
+              {/* Step-by-Step Calculation / Explanation */}
+              <div className="review-explanation-box">
+                <strong>Calculation & Solution:</strong>
+                <div style={{whiteSpace:'pre-line'}} dangerouslySetInnerHTML={{ __html: q.explanation || "No specific calculation provided for this item." }} />
+              </div>
+            </div>
+          );
+        })}
+
+        <button className="btn-full btn-primary-full" style={{marginTop:'1.5rem'}} onClick={() => { setGameState('dashboard'); setCurrentTab('home'); }}>
+          Done Reviewing
+        </button>
+      </div>
+    );
+  };
+
   const renderResults = () => {
     const score = calculateScore();
     const total = currentQuestions.length;
-    const percentage = Math.round((score / total) * 100);
+    const percentage = total > 0 ? Math.round((score / total) * 100) : 0;
     const timeSpent = totalTime - timeLeft;
     
     return (
@@ -742,7 +974,7 @@ function App() {
         </div>
 
         <h1 className="result-title">{percentage >= 50 ? 'Great Job' : 'Keep Practicing'}, {user?.name}!</h1>
-        <p className="result-subtitle">You're doing well. Keep practicing to reach 250+.</p>
+        <p className="result-subtitle">You answered {score} out of {total} questions correctly.</p>
 
         <div className="stats-grid">
           <div className="stat-card">
@@ -784,11 +1016,20 @@ function App() {
         </div>
 
         <div className="result-actions">
+          {/* Button to view all explanations & calculations */}
+          <button 
+            className="btn-full" 
+            style={{background:'rgba(16, 185, 129, 0.15)', color:'var(--primary)', border:'1px solid var(--primary)', display:'flex', alignItems:'center', justifyContent:'center', gap:'0.5rem'}}
+            onClick={() => setGameState('review')}
+          >
+            <Eye size={20} /> Review Solutions & Calculations
+          </button>
+
           <button className="btn-full btn-primary-full" onClick={() => { setGameState('dashboard'); setCurrentTab('home'); setSelectedSubjects([]); }}>
             Back to Dashboard
           </button>
           <button className="btn-full btn-outline-full" onClick={() => { setGameState('dashboard'); setCurrentTab('subjects'); }}>
-            <RefreshCw size={20} style={{display:'inline', verticalAlign:'middle', marginRight:'0.5rem'}}/> Try Again
+            <RefreshCw size={20} style={{display:'inline', verticalAlign:'middle', marginRight:'0.5rem'}}/> Try Another Exam
           </button>
         </div>
       </div>
@@ -840,6 +1081,7 @@ function App() {
       )}
       
       {gameState === 'results' && renderResults()}
+      {gameState === 'review' && renderReviewScreen()}
       
       {gameState === 'dashboard' && renderBottomNav()}
     </div>

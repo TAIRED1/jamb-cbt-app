@@ -883,3 +883,114 @@ input:checked + .slider {
 input:checked + .slider:before {
   transform: translateX(22px);
 }
+
+/* =========================================
+   CUSTOM QUESTION COUNT & REVIEW STYLES
+   ========================================= */
+.count-pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 0.5rem;
+  margin-bottom: 0.75rem;
+}
+
+.count-pill {
+  padding: 0.5rem 0.85rem;
+  border-radius: 12px;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  color: var(--text-muted);
+  font-weight: 600;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.count-pill:hover {
+  border-color: var(--primary);
+  color: var(--text-main);
+}
+
+.count-pill.active {
+  background: var(--primary);
+  color: var(--bg-main);
+  border-color: var(--primary);
+  box-shadow: 0 2px 10px var(--primary-glow);
+}
+
+.custom-count-input-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 0.5rem;
+}
+
+.custom-count-input {
+  flex: 1;
+  padding: 0.65rem 1rem;
+  background: var(--bg-main);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  color: var(--text-main);
+  font-size: 0.95rem;
+  outline: none;
+}
+
+.custom-count-input:focus {
+  border-color: var(--primary);
+}
+
+/* Review Solutions & Calculations Screen */
+.review-screen {
+  padding: 1.5rem;
+  padding-bottom: 5rem;
+  animation: fadeIn 0.3s ease-out;
+}
+
+.review-item-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 1.25rem;
+  margin-bottom: 1.25rem;
+  transition: border-color 0.2s;
+}
+
+.review-item-card.correct-card {
+  border-left: 4px solid var(--primary);
+}
+
+.review-item-card.wrong-card {
+  border-left: 4px solid var(--color-red);
+}
+
+.review-item-card.unanswered-card {
+  border-left: 4px solid var(--color-orange);
+}
+
+.review-explanation-box {
+  background: rgba(16, 185, 129, 0.06);
+  border: 1px solid rgba(16, 185, 129, 0.2);
+  border-radius: 12px;
+  padding: 1rem;
+  margin-top: 1rem;
+  font-size: 0.9rem;
+  line-height: 1.6;
+  color: #D1D5DB;
+}
+
+.review-explanation-box strong {
+  color: var(--primary);
+  display: block;
+  margin-bottom: 0.35rem;
+}
+
+.option-row {
+  word-break: break-word;
+}
+
+.option-text {
+  word-break: break-word;
+  overflow-wrap: anywhere;
+}
