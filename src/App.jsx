@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
+import { App as CapApp } from '@capacitor/app';
 import subjectsData from './data/offline_questions.json';
 import { 
   Home, Target, PlayCircle, FileText, Calendar, 
@@ -21,6 +22,11 @@ function App() {
   const [answers, setAnswers] = useState({}); // { index: selectedOptionIndex }
   const [timeLeft, setTimeLeft] = useState(0);
   const [totalTime, setTotalTime] = useState(0);
+
+  // Active Session Persistence & Modals
+  const [activeSession, setActiveSession] = useState(null);
+  const [showPauseModal, setShowPauseModal] = useState(false);
+  const [showResumePrompt, setShowResumePrompt] = useState(false);
   
   // Settings & Custom Question Count
   const [examMode, setExamMode] = useState('practice'); 
@@ -33,7 +39,32 @@ function App() {
   const [flagged, setFlagged] = useState([]);
   const [reviewFilter, setReviewFilter] = useState('all'); // all, wrong, correct
 
-  // Initialize Data
+  // Keep a ref to latest state for background/leave event listeners
+  const sessionRef = useRef({
+    gameState,
+    examMode,
+    selectedSubjects,
+    currentQuestions,
+    currentQuestionIndex,
+    answers,
+    timeLeft,
+    totalTime
+  });
+
+  useEffect(() => {
+    sessionRef.current = {
+      gameState,
+      examMode,
+      selectedSubjects,
+      currentQuestions,
+      currentQuestionIndex,
+      answers,
+      timeLeft,
+      totalTime
+    };
+  }, [gameState, examMode, selectedSubjects, currentQuestions, currentQuestionIndex, answers, timeLeft, totalTime]);
+
+  // Initialize Data & Check for Active Session
   useEffect(() => {
     const savedUser = localStorage.getItem('jamb_user');
     if (savedUser) setUser(JSON.parse(savedUser));
@@ -61,9 +92,134 @@ function App() {
         setCustomInputVal(String(parsed));
       }
     }
+
+    // Check for ongoing active session
+    const savedActiveSession = localStorage.getItem('jamb_active_session');
+    if (savedActiveSession) {
+      try {
+        const session = JSON.parse(savedActiveSession);
+        if (session && session.currentQuestions && session.currentQuestions.length > 0) {
+          setActiveSession(session);
+          setShowResumePrompt(true);
+        }
+      } catch (e) {
+        console.error("Failed to parse saved active session", e);
+      }
+    }
   }, []);
 
-  // Timer
+  // Save active session to localStorage helper
+  const saveSessionNow = (overrides = {}) => {
+    const snap = { ...sessionRef.current, ...overrides };
+    if ((snap.gameState === 'testing' || snap.gameState === 'feedback') && snap.currentQuestions?.length > 0) {
+      const sessionData = {
+        examMode: snap.examMode,
+        selectedSubjects: snap.selectedSubjects,
+        currentQuestions: snap.currentQuestions,
+        currentQuestionIndex: snap.currentQuestionIndex,
+        answers: snap.answers,
+        timeLeft: snap.timeLeft,
+        totalTime: snap.totalTime,
+        gameState: snap.gameState,
+        savedAt: Date.now()
+      };
+      localStorage.setItem('jamb_active_session', JSON.stringify(sessionData));
+      setActiveSession(sessionData);
+    }
+  };
+
+  // Handle App Minimizing / Backgrounding / Leaving app
+  useEffect(() => {
+    const handleSaveOnLeave = () => {
+      const snap = sessionRef.current;
+      if (snap && (snap.gameState === 'testing' || snap.gameState === 'feedback') && snap.currentQuestions?.length > 0) {
+        const sessionData = {
+          examMode: snap.examMode,
+          selectedSubjects: snap.selectedSubjects,
+          currentQuestions: snap.currentQuestions,
+          currentQuestionIndex: snap.currentQuestionIndex,
+          answers: snap.answers,
+          timeLeft: snap.timeLeft,
+          totalTime: snap.totalTime,
+          gameState: snap.gameState,
+          savedAt: Date.now()
+        };
+        localStorage.setItem('jamb_active_session', JSON.stringify(sessionData));
+        setActiveSession(sessionData);
+      }
+    };
+
+    const handleVisibilityChange = () => {
+      if (document.hidden) {
+        handleSaveOnLeave();
+      }
+    };
+
+    let appStateListener = null;
+    try {
+      appStateListener = CapApp.addListener('appStateChange', ({ isActive }) => {
+        if (!isActive) {
+          handleSaveOnLeave();
+        }
+      });
+    } catch (e) {}
+
+    document.addEventListener('visibilitychange', handleVisibilityChange);
+    window.addEventListener('pagehide', handleSaveOnLeave);
+    window.addEventListener('beforeunload', handleSaveOnLeave);
+
+    return () => {
+      document.removeEventListener('visibilitychange', handleVisibilityChange);
+      window.removeEventListener('pagehide', handleSaveOnLeave);
+      window.removeEventListener('beforeunload', handleSaveOnLeave);
+      if (appStateListener && typeof appStateListener.then === 'function') {
+        appStateListener.then(l => l && l.remove && l.remove()).catch(() => {});
+      }
+    };
+  }, []);
+
+  // Handle Android Hardware Back Button via @capacitor/app
+  useEffect(() => {
+    let listenerPromise = null;
+    try {
+      listenerPromise = CapApp.addListener('backButton', () => {
+        if (showPauseModal) {
+          setShowPauseModal(false);
+        } else if (showResumePrompt) {
+          setShowResumePrompt(false);
+        } else if (showCalculator) {
+          setShowCalculator(false);
+        } else if (showNotifications) {
+          setShowNotifications(false);
+        } else if (gameState === 'feedback') {
+          setGameState('testing');
+        } else if (gameState === 'testing') {
+          setShowPauseModal(true);
+        } else if (gameState === 'review') {
+          setGameState('results');
+        } else if (gameState === 'results') {
+          setGameState('dashboard');
+          setCurrentTab('home');
+        } else if (currentTab !== 'home') {
+          setCurrentTab('home');
+        } else {
+          try {
+            CapApp.exitApp();
+          } catch (e) {}
+        }
+      });
+    } catch (e) {
+      console.warn("Capacitor App plugin listener failed:", e);
+    }
+
+    return () => {
+      if (listenerPromise && typeof listenerPromise.then === 'function') {
+        listenerPromise.then(l => l && l.remove && l.remove()).catch(() => {});
+      }
+    };
+  }, [showPauseModal, showResumePrompt, showCalculator, showNotifications, gameState, currentTab]);
+
+  // Timer with periodic progress save
   useEffect(() => {
     let timer;
     if (gameState === 'testing' && timeLeft > 0) {
@@ -73,7 +229,18 @@ function App() {
             finishExam();
             return 0;
           }
-          return prev - 1;
+          const nextTime = prev - 1;
+          if (nextTime % 5 === 0) {
+            try {
+              const currentRaw = localStorage.getItem('jamb_active_session');
+              if (currentRaw) {
+                const parsed = JSON.parse(currentRaw);
+                parsed.timeLeft = nextTime;
+                localStorage.setItem('jamb_active_session', JSON.stringify(parsed));
+              }
+            } catch (e) {}
+          }
+          return nextTime;
         });
       }, 1000);
     }
@@ -154,6 +321,34 @@ function App() {
     } catch (e) {}
   };
 
+  const handleResumeSession = (sessionToResume) => {
+    const session = sessionToResume || activeSession;
+    if (!session || !session.currentQuestions || session.currentQuestions.length === 0) return;
+    
+    setSelectedSubjects(session.selectedSubjects || []);
+    setCurrentQuestions(session.currentQuestions);
+    setCurrentQuestionIndex(session.currentQuestionIndex || 0);
+    setAnswers(session.answers || {});
+    setTimeLeft(session.timeLeft !== undefined ? session.timeLeft : session.currentQuestions.length * 45);
+    setTotalTime(session.totalTime || session.currentQuestions.length * 45);
+    setExamMode(session.examMode || 'practice');
+    setGameState('testing');
+    setShowPauseModal(false);
+    setShowResumePrompt(false);
+  };
+
+  const handleDiscardSession = () => {
+    if (window.confirm("Discard this in-progress practice session? All unsaved progress will be cleared.")) {
+      localStorage.removeItem('jamb_active_session');
+      setActiveSession(null);
+      setShowPauseModal(false);
+      setShowResumePrompt(false);
+      setGameState('dashboard');
+      setCurrentQuestions([]);
+      setAnswers({});
+    }
+  };
+
   const startExam = (modeOverride) => {
     if (selectedSubjects.length === 0) return;
     const modeToUse = modeOverride || examMode;
@@ -177,31 +372,68 @@ function App() {
       combined = [...combined, ...qs];
     });
     
+    const duration = combined.length * 45; // 45 secs per question
+    const sessionData = {
+      examMode: modeToUse,
+      selectedSubjects,
+      currentQuestions: combined,
+      currentQuestionIndex: 0,
+      answers: {},
+      timeLeft: duration,
+      totalTime: duration,
+      gameState: 'testing',
+      savedAt: Date.now()
+    };
+    
     setCurrentQuestions(combined);
     setAnswers({});
     setCurrentQuestionIndex(0);
-    const duration = combined.length * 45; // 45 secs per question
     setTimeLeft(duration); 
     setTotalTime(duration);
     setGameState('testing');
     setShowCalculator(false);
+    setShowPauseModal(false);
+    setShowResumePrompt(false);
+    setActiveSession(sessionData);
+    localStorage.setItem('jamb_active_session', JSON.stringify(sessionData));
   };
 
   const startBookmarksPractice = () => {
     if (flagged.length === 0) return;
     setExamMode('practice');
     const combined = [...flagged].sort(() => 0.5 - Math.random());
+    const duration = combined.length * 60;
+    const sessionData = {
+      examMode: 'practice',
+      selectedSubjects: ['Bookmarks'],
+      currentQuestions: combined,
+      currentQuestionIndex: 0,
+      answers: {},
+      timeLeft: duration,
+      totalTime: duration,
+      gameState: 'testing',
+      savedAt: Date.now()
+    };
+
     setCurrentQuestions(combined);
     setAnswers({});
     setCurrentQuestionIndex(0);
-    const duration = combined.length * 60;
     setTimeLeft(duration); 
     setTotalTime(duration);
     setGameState('testing');
     setShowCalculator(false);
+    setShowPauseModal(false);
+    setShowResumePrompt(false);
+    setActiveSession(sessionData);
+    localStorage.setItem('jamb_active_session', JSON.stringify(sessionData));
   };
 
   const finishExam = () => {
+    localStorage.removeItem('jamb_active_session');
+    setActiveSession(null);
+    setShowPauseModal(false);
+    setShowResumePrompt(false);
+
     const newStats = { ...stats };
     currentQuestions.forEach((q, idx) => {
       if (answers[idx] !== undefined && q.subjectKey && newStats[q.subjectKey]) {
@@ -227,15 +459,20 @@ function App() {
   const handleSelectOption = (optionIndex) => {
     if (examMode === 'practice' && answers[currentQuestionIndex] !== undefined) return;
 
-    setAnswers(prev => ({
-      ...prev,
+    const newAnswers = {
+      ...answers,
       [currentQuestionIndex]: optionIndex
-    }));
+    };
+    setAnswers(newAnswers);
+    saveSessionNow({ answers: newAnswers });
 
     if (examMode === 'practice') {
       const q = currentQuestions[currentQuestionIndex];
       playSound(optionIndex === q.answer);
-      setTimeout(() => setGameState('feedback'), 300);
+      setTimeout(() => {
+        setGameState('feedback');
+        saveSessionNow({ answers: newAnswers, gameState: 'feedback' });
+      }, 300);
     }
   };
 
@@ -308,6 +545,57 @@ function App() {
           <div style={{fontSize:'0.85rem', color:'var(--text-muted)'}}>
              <strong style={{color:'var(--color-purple)', display:'block'}}>Detailed Explanations</strong>
              You can now review step-by-step calculations after every exam!
+          </div>
+        </div>
+      )}
+
+      {/* Resume In-Progress Practice Card */}
+      {activeSession && activeSession.currentQuestions && activeSession.currentQuestions.length > 0 && (
+        <div className="resume-card">
+          <div style={{display:'flex', alignItems:'center', justifyContent:'space-between', marginBottom:'0.75rem'}}>
+            <div style={{display:'flex', alignItems:'center', gap:'0.5rem'}}>
+              <span className="pulse-indicator"></span>
+              <span style={{fontSize:'0.75rem', fontWeight:700, color:'var(--primary)', letterSpacing:'0.5px', textTransform:'uppercase'}}>
+                Active Session In Progress
+              </span>
+            </div>
+            <span style={{fontSize:'0.75rem', color:'var(--text-muted)', background:'rgba(255,255,255,0.06)', padding:'0.2rem 0.5rem', borderRadius:'6px'}}>
+              {activeSession.examMode === 'practice' ? 'Practice' : 'Mock Exam'}
+            </span>
+          </div>
+
+          <h3 style={{fontSize:'1.15rem', fontWeight:700, marginBottom:'0.35rem', color:'var(--text-main)'}}>
+            {activeSession.selectedSubjects && activeSession.selectedSubjects.length > 0 
+              ? activeSession.selectedSubjects.map(s => subjectsData[s]?.name || s).join(', ')
+              : 'JAMB Practice Session'}
+          </h3>
+
+          <div style={{display:'flex', justifyContent:'space-between', fontSize:'0.85rem', color:'var(--text-muted)', marginBottom:'0.5rem'}}>
+            <span>Question {(activeSession.currentQuestionIndex || 0) + 1} of {activeSession.currentQuestions.length}</span>
+            <span style={{color:'var(--primary)', fontWeight:600}}>{Object.keys(activeSession.answers || {}).length} answered</span>
+          </div>
+
+          <div className="progress-bar-container" style={{marginBottom:'1rem', height:'6px'}}>
+            <div 
+              className="progress-bar-fill" 
+              style={{width: `${Math.round(((Object.keys(activeSession.answers || {}).length) / Math.max(1, activeSession.currentQuestions.length)) * 100)}%`}}
+            ></div>
+          </div>
+
+          <div style={{display:'flex', gap:'0.75rem'}}>
+            <button 
+              className="btn-full btn-primary-full" 
+              style={{padding:'0.85rem 1rem', fontSize:'0.92rem', flex:1, display:'flex', alignItems:'center', justifyContent:'center', gap:'0.5rem'}}
+              onClick={() => handleResumeSession()}
+            >
+              <PlayCircle size={18} /> Resume Practice
+            </button>
+            <button 
+              style={{padding:'0.85rem 1rem', fontSize:'0.85rem', background:'rgba(239, 68, 68, 0.12)', color:'var(--color-red)', border:'1px solid rgba(239, 68, 68, 0.3)', borderRadius:'12px', cursor:'pointer', fontWeight:600}}
+              onClick={handleDiscardSession}
+            >
+              Discard
+            </button>
           </div>
         </div>
       )}
@@ -673,12 +961,7 @@ function App() {
         {showCalculator && <Calculator onClose={() => setShowCalculator(false)} />}
 
         <div className="test-header">
-          <button className="test-back-btn" onClick={() => {
-            if(window.confirm("Quit exam? Progress will not be saved.")) {
-              setGameState('dashboard');
-              setCurrentTab('home');
-            }
-          }}>
+          <button className="test-back-btn" onClick={() => setShowPauseModal(true)}>
             <ArrowLeft size={20} /> {examMode === 'practice' ? 'Practice' : 'Mock'}
           </button>
           
@@ -755,7 +1038,11 @@ function App() {
           <div className="test-controls">
             <button 
               className="btn-test-nav btn-prev"
-              onClick={() => setCurrentQuestionIndex(prev => Math.max(0, prev - 1))}
+              onClick={() => {
+                const prevIdx = Math.max(0, currentQuestionIndex - 1);
+                setCurrentQuestionIndex(prevIdx);
+                saveSessionNow({ currentQuestionIndex: prevIdx });
+              }}
               disabled={currentQuestionIndex === 0}
               style={{opacity: currentQuestionIndex === 0 ? 0.5 : 1}}
             >
@@ -768,7 +1055,9 @@ function App() {
                 if (currentQuestionIndex === currentQuestions.length - 1) {
                   finishExam();
                 } else {
-                  setCurrentQuestionIndex(prev => Math.min(currentQuestions.length - 1, prev + 1))
+                  const nextIdx = Math.min(currentQuestions.length - 1, currentQuestionIndex + 1);
+                  setCurrentQuestionIndex(nextIdx);
+                  saveSessionNow({ currentQuestionIndex: nextIdx });
                 }
               }}
             >
@@ -820,7 +1109,9 @@ function App() {
             onClick={() => {
               setGameState('testing');
               if (currentQuestionIndex < currentQuestions.length - 1) {
-                setCurrentQuestionIndex(prev => prev + 1);
+                const nextIdx = currentQuestionIndex + 1;
+                setCurrentQuestionIndex(nextIdx);
+                saveSessionNow({ gameState: 'testing', currentQuestionIndex: nextIdx });
               } else {
                 finishExam();
               }
@@ -1079,6 +1370,86 @@ function App() {
     </div>
   );
 
+  const renderPauseModal = () => (
+    <div className="modal-backdrop" onClick={() => setShowPauseModal(false)}>
+      <div className="modal-dialog" onClick={(e) => e.stopPropagation()}>
+        <div style={{width:'56px', height:'56px', borderRadius:'16px', background:'rgba(16, 185, 129, 0.12)', color:'var(--primary)', display:'flex', alignItems:'center', justifyContent:'center', margin:'0 auto 1rem'}}>
+          <Clock size={28} />
+        </div>
+        <h3 style={{fontSize:'1.3rem', fontWeight:700, marginBottom:'0.5rem', color:'var(--text-main)'}}>
+          Pause Practice?
+        </h3>
+        <p style={{fontSize:'0.9rem', color:'var(--text-muted)', lineHeight:1.5, marginBottom:'1.5rem'}}>
+          Your progress ({Object.keys(answers).length} of {currentQuestions.length} answered) is automatically saved. You can resume anytime from the dashboard.
+        </p>
+
+        <div style={{display:'flex', flexDirection:'column', gap:'0.75rem'}}>
+          <button 
+            className="btn-full btn-primary-full" 
+            onClick={() => {
+              saveSessionNow();
+              setShowPauseModal(false);
+              setGameState('dashboard');
+              setCurrentTab('home');
+            }}
+            style={{display:'flex', alignItems:'center', justifyContent:'center', gap:'0.5rem'}}
+          >
+            <Home size={18} /> Save & Return to Dashboard
+          </button>
+
+          <button 
+            className="btn-full btn-outline-full"
+            onClick={() => setShowPauseModal(false)}
+          >
+            Keep Practicing
+          </button>
+
+          <button 
+            onClick={handleDiscardSession}
+            style={{background:'transparent', border:'none', color:'var(--color-red)', fontSize:'0.85rem', fontWeight:600, padding:'0.5rem', cursor:'pointer', marginTop:'0.25rem'}}
+          >
+            Discard & Quit Session
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+
+  const renderResumePrompt = () => {
+    if (!activeSession || !activeSession.currentQuestions || activeSession.currentQuestions.length === 0) return null;
+    return (
+      <div className="modal-backdrop">
+        <div className="modal-dialog">
+          <div style={{width:'56px', height:'56px', borderRadius:'16px', background:'rgba(16, 185, 129, 0.12)', color:'var(--primary)', display:'flex', alignItems:'center', justifyContent:'center', margin:'0 auto 1rem'}}>
+            <PlayCircle size={28} />
+          </div>
+          <h3 style={{fontSize:'1.3rem', fontWeight:700, marginBottom:'0.5rem', color:'var(--text-main)'}}>
+            Resume Your Practice?
+          </h3>
+          <p style={{fontSize:'0.9rem', color:'var(--text-muted)', lineHeight:1.5, marginBottom:'1.5rem'}}>
+            You have an unfinished practice session on Question {(activeSession.currentQuestionIndex || 0) + 1} with {Object.keys(activeSession.answers || {}).length} questions answered.
+          </p>
+
+          <div style={{display:'flex', flexDirection:'column', gap:'0.75rem'}}>
+            <button 
+              className="btn-full btn-primary-full" 
+              onClick={() => handleResumeSession()}
+              style={{display:'flex', alignItems:'center', justifyContent:'center', gap:'0.5rem'}}
+            >
+              <PlayCircle size={18} /> Resume Practice Now
+            </button>
+            <button 
+              className="btn-full btn-outline-full"
+              onClick={() => setShowResumePrompt(false)}
+            >
+              Go to Dashboard
+            </button>
+          </div>
+        </div>
+      </div>
+    );
+  };
+
   if (!user) {
     return (
       <div className="app-container">
@@ -1089,6 +1460,9 @@ function App() {
 
   return (
     <div className="app-container" key={gameState + currentTab}>
+      {showPauseModal && renderPauseModal()}
+      {showResumePrompt && renderResumePrompt()}
+
       {gameState === 'dashboard' && currentTab === 'home' && renderDashboard()}
       {gameState === 'dashboard' && currentTab === 'subjects' && renderSubjects()}
       {gameState === 'dashboard' && currentTab === 'plan' && renderPlan()}
